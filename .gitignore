@@ -6,3 +6,6 @@ node_modules/
 .impeccable/build/
 
 .vercel/
+
+__pycache__/
+*.pyc

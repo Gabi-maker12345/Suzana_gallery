@@ -23,6 +23,22 @@ SEED = ROOT / "js" / "categorias.seed.js"
 REPORT = ROOT / "data" / "categorias-validacao.md"
 
 
+
+SEED_RUNTIME_FOOTER = """
+
+/* Popula o localStorage apenas no primeiro acesso; preserva edições locais existentes. */
+(() => {
+  try {
+    const key = "suzana-galeria-categorias-v1";
+    const stored = JSON.parse(localStorage.getItem(key) || "[]");
+    if (!Array.isArray(stored) || stored.length === 0) {
+      localStorage.setItem(key, JSON.stringify(window.SUZANA_CATEGORIES));
+    }
+  } catch {}
+})();
+"""
+
+
 def main() -> None:
     export = json.loads(EXPORT.read_text(encoding="utf-8"))
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
@@ -128,7 +144,8 @@ def main() -> None:
         "/* Gerado por scripts/build-categories-seed.py — não editar à mão. */\n"
         "window.SUZANA_CATEGORIES = "
         + json.dumps(categories, ensure_ascii=False, indent=2)
-        + ";\n",
+        + ";\n"
+        + SEED_RUNTIME_FOOTER,
         encoding="utf-8",
     )
 

@@ -162,3 +162,14 @@ window.SUZANA_CATEGORIES = [
     "updatedAt": 1795239257983
   }
 ];
+
+/* Popula o localStorage apenas no primeiro acesso; preserva edições locais existentes. */
+(() => {
+  try {
+    const key = "suzana-galeria-categorias-v1";
+    const stored = JSON.parse(localStorage.getItem(key) || "[]");
+    if (!Array.isArray(stored) || stored.length === 0) {
+      localStorage.setItem(key, JSON.stringify(window.SUZANA_CATEGORIES));
+    }
+  } catch {}
+})();

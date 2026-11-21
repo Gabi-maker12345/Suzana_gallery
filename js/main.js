@@ -7,6 +7,9 @@
   "use strict";
 
   document.documentElement.classList.add("js");
+  if (location.hostname.endsWith(".vercel.app")) {
+    document.documentElement.classList.add("is-deploy");
+  }
 
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
