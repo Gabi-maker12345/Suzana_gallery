@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-21T04:55:56+01:00",
+  "title": "Design System: Suzana Galery",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper Cream",
+        "canonical": "#f7f1ec",
+        "tonalRamp": ["#0c0b09", "#2b2826", "#4d4a46", "#726e6a", "#999490", "#bebab6", "#dedad7", "#f4f1ee"]
+      },
+      "paper-blush": {
+        "role": "neutral",
+        "displayName": "Blush Paper",
+        "canonical": "#fdf5f3",
+        "tonalRamp": ["#0d0b0a", "#2b2827", "#4e4948", "#736d6b", "#9a9392", "#bfb9b8", "#ded9d8", "#f5f1ef"]
+      },
+      "hero-rose": {
+        "role": "primary",
+        "displayName": "Stage Rose",
+        "canonical": "#f391a5",
+        "tonalRamp": ["#1c0107", "#451622", "#733242", "#a45063", "#ce7789", "#eea2b0", "#ffc6d2", "#ffe0ea"]
+      },
+      "hero-rose-light": {
+        "role": "primary",
+        "displayName": "Rose Light",
+        "canonical": "#f7a7b4",
+        "tonalRamp": ["#190308", "#401b23", "#6c3842", "#9a5864", "#c47e8a", "#e5a7b1", "#ffcbd2", "#ffe4ea"]
+      },
+      "hero-rose-deep": {
+        "role": "primary",
+        "displayName": "Rose Deep",
+        "canonical": "#ef7f94",
+        "tonalRamp": ["#1e0006", "#491220", "#782d3e", "#ab4a5f", "#d67284", "#f69eac", "#ffc3ce", "#ffdde7"]
+      },
+      "wine": {
+        "role": "secondary",
+        "displayName": "Wine Ink",
+        "canonical": "#4a1420",
+        "tonalRamp": ["#180508", "#3e1e23", "#683b42", "#955c64", "#be828a", "#e0aab1", "#fccdd2", "#ffe6ea"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Aubergine Ink",
+        "canonical": "#251b1e",
+        "tonalRamp": ["#0e0a0b", "#2d2729", "#51484a", "#776b6e", "#9e9295", "#c2b7ba", "#e1d8da", "#f8eff2"]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Plum Ink",
+        "canonical": "#6c5b5f",
+        "tonalRamp": ["#0f090b", "#2f2628", "#534749", "#7a6a6e", "#a19094", "#c5b6b9", "#e4d7da", "#faeef1"]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Quiet Plum",
+        "canonical": "#786569",
+        "tonalRamp": ["#0f090b", "#302628", "#544649", "#7b696d", "#a29094", "#c6b6b9", "#e5d7d9", "#fbeef1"]
+      },
+      "rose-wash": {
+        "role": "tertiary",
+        "displayName": "Petal Wash",
+        "canonical": "#fbe0e5",
+        "tonalRamp": ["#10090a", "#312528", "#564549", "#7e686c", "#a58e93", "#c9b5b8", "#e7d6d9", "#fdedf0"]
+      },
+      "rose-ink": {
+        "role": "secondary",
+        "displayName": "Rose Label",
+        "canonical": "#b34a61",
+        "tonalRamp": ["#1e0006", "#491220", "#782d3e", "#ab4a5f", "#d67285", "#f69eac", "#ffc3ce", "#ffdde7"]
+      },
+      "berry": {
+        "role": "secondary",
+        "displayName": "Berry Button",
+        "canonical": "#c4425c",
+        "tonalRamp": ["#220004", "#4f081b", "#802337", "#b53f56", "#e2697c", "#ff97a4", "#ffbdc8", "#ffd9e1"]
+      },
+      "berry-deep": {
+        "role": "secondary",
+        "displayName": "Berry Deep",
+        "canonical": "#a92e49",
+        "tonalRamp": ["#210004", "#4e0b1b", "#7f2638", "#b34257", "#df6b7c", "#fe99a5", "#ffbfc8", "#ffdae1"]
+      },
+      "cherry": {
+        "role": "tertiary",
+        "displayName": "Cherry Focus",
+        "canonical": "#d8415e",
+        "tonalRamp": ["#240002", "#530017", "#861932", "#bd3450", "#ea6075", "#ff919f", "#ffb9c3", "#ffd5dd"]
+      },
+      "charcoal": {
+        "role": "neutral",
+        "displayName": "Charcoal Shell",
+        "canonical": "#2a2023",
+        "tonalRamp": ["#0e0a0b", "#2d2729", "#50484a", "#776b6e", "#9d9295", "#c2b7ba", "#e1d8da", "#f7eff2"]
+      },
+      "pill-text": {
+        "role": "secondary",
+        "displayName": "Pill Wine",
+        "canonical": "#8f3547",
+        "tonalRamp": ["#1d0106", "#461620", "#74323d", "#a5505e", "#d07784", "#f0a2ab", "#ffc6ce", "#ffe0e6"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero title only; tight line-height and negative tracking, in Wine Ink." },
+      "headline": { "displayName": "Headline", "purpose": "Shelf headings such as Cenas de Hu Tao and Buscas recentes." },
+      "title": { "displayName": "Title", "purpose": "Viewer title and work-row titles." },
+      "body": { "displayName": "Body", "purpose": "Page default and descriptions; small, quiet, never above 16px in this screen." },
+      "label": { "displayName": "Label", "purpose": "Uppercase metadata, state tags, footer, and the desktop art hint." },
+      "ui": { "displayName": "UI", "purpose": "Nav links, buttons, search pills." }
+    },
+    "shadows": [
+      { "name": "card", "value": "0 12px 26px -22px rgba(96, 42, 54, 0.7)", "purpose": "Resting lift for scenes, keeps, and extra rows." },
+      { "name": "soft", "value": "0 22px 44px -30px rgba(96, 42, 54, 0.42)", "purpose": "Hover lift for scene and keep cards." },
+      { "name": "hero", "value": "0 44px 86px -58px rgba(150, 50, 70, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.36)", "purpose": "The pink stage itself." },
+      { "name": "print", "value": "0 40px 64px -30px rgba(58, 30, 36, 0.48), inset 0 3px 0 rgba(255, 255, 255, 0.4)", "purpose": "Framed hero artwork pending transparent cutouts." },
+      { "name": "viewer", "value": "0 60px 120px -40px rgba(34, 10, 18, 0.75)", "purpose": "Modal shell above the blurred plum backdrop." },
+      { "name": "toast", "value": "0 20px 40px -20px rgba(20, 6, 12, 0.8)", "purpose": "Floating status pill." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Default easing for state changes, reveals, and card lifts." },
+      { "name": "ease-parallax", "value": "cubic-bezier(0.22, 0.68, 0.28, 1)", "purpose": "Pointer parallax on the hero art." },
+      { "name": "duration-fast", "value": "0.25s", "purpose": "Opacity and nav underlines." },
+      { "name": "duration-state", "value": "0.35s", "purpose": "Hover lifts, chips, arrows, viewer controls." },
+      { "name": "duration-media", "value": "0.95s", "purpose": "Art crossfade and scene image zoom." },
+      { "name": "duration-reveal", "value": "0.9s", "purpose": "Shelf reveal on intersection." },
+      { "name": "hero-intro", "value": "1s", "purpose": "One-time hero entrance on load." },
+      { "name": "art-float", "value": "8s", "purpose": "Continuous front-print drift of 9px." },
+      { "name": "auto-advance", "value": "7.8s", "purpose": "Carousel dwell; starts paused under reduced motion and pauses on hover, focus, hidden tab, open viewer, or manual stop." },
+      { "name": "title-char", "value": "720ms with 34ms stagger", "purpose": "Per-character hero title entrance." },
+      { "name": "toast-dwell", "value": "3.6s", "purpose": "Status message visibility." }
+    ],
+    "breakpoints": [
+      { "name": "wide", "value": "1080px", "purpose": "Boards fold from three columns to two; works become a three-up row." },
+      { "name": "tablet", "value": "860px", "purpose": "Two-row header, stacked boards, 540px hero, 28px arrows, autoplay to the top-right, pagination at 34/48px." },
+      { "name": "phone", "value": "520px", "purpose": "Arrows hidden, 560px hero, 39px title, 24px radius, pagination at 26/36px." },
+      { "name": "stage-max", "value": "1252px", "purpose": "Stage cap; yields a 1164px hero between 36px arrows and 8px gaps." },
+      { "name": "shell-max", "value": "1180px", "purpose": "Top bar, boards, and footer shell cap." },
+      { "name": "hero-max", "value": "474px", "purpose": "Hero height cap; floor is 382px." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single filled account action, berry gradient with a warm inner highlight.",
+      "html": "<button class='ds-btn-primary' type='button'>Criar conta</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; height: 38px; padding: 0 19px; border: 1px solid transparent; border-radius: 999px; background: linear-gradient(180deg, #c4425c, #a92e49); color: #fff; font-family: var(--display, 'Gabarito', system-ui, sans-serif); font-size: 13px; font-weight: 600; letter-spacing: 0.015em; cursor: pointer; box-shadow: 0 10px 22px -14px rgba(140, 26, 52, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.24); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s; } .ds-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 16px 28px -16px rgba(216, 61, 92, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.5); } .ds-btn-primary:active { transform: translateY(0) scale(0.98); } .ds-btn-primary:focus-visible { outline: 2px solid #d8415e; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary account action: translucent white pill with a soft ink border.",
+      "html": "<button class='ds-btn-ghost' type='button'>Entrar</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; height: 38px; padding: 0 19px; border: 1px solid rgba(37, 27, 30, 0.24); border-radius: 999px; background: rgba(255, 255, 255, 0.54); color: #251b1e; font-family: var(--display, 'Gabarito', system-ui, sans-serif); font-size: 13px; font-weight: 600; letter-spacing: 0.015em; cursor: pointer; transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, box-shadow 0.35s, border-color 0.3s; } .ds-btn-ghost:hover { background: #fff; border-color: rgba(37, 27, 30, 0.4); transform: translateY(-1px); box-shadow: 0 10px 22px -18px rgba(60, 30, 36, 0.6); } .ds-btn-ghost:focus-visible { outline: 2px solid #d8415e; outline-offset: 3px; }"
+    },
+    {
+      "name": "Icon Chip",
+      "kind": "chip",
+      "refersTo": "icon-chip",
+      "description": "Square-ish 11px-radius icon action used for profile and saving the current work.",
+      "html": "<button class='ds-chip' type='button' aria-label='Abrir seu perfil'><svg width='17' height='17' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><circle cx='12' cy='8.2' r='3.5'/><path d='M5.2 20c.7-3.7 3.4-5.7 6.8-5.7s6.1 2 6.8 5.7'/></svg></button>",
+      "css": ".ds-chip { width: 36px; height: 36px; display: grid; place-items: center; border: 0; border-radius: 11px; background: linear-gradient(180deg, #33272a, #231a1c); color: #fdf7f4; cursor: pointer; box-shadow: 0 8px 16px -10px rgba(40, 20, 24, 0.8); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s, background 0.3s; } .ds-chip:hover { transform: translateY(-2px); } .ds-chip:active { transform: translateY(0) scale(0.96); } .ds-chip:focus-visible { outline: 2px solid #d8415e; outline-offset: 3px; }"
+    },
+    {
+      "name": "Search Pill",
+      "kind": "chip",
+      "refersTo": "search-pill",
+      "description": "Recent-search toggle with a pink wash at rest and a charcoal surface when active.",
+      "html": "<button class='ds-pill is-active' type='button' aria-pressed='true'><span class='ds-pill__dot' aria-hidden='true'></span>Hu Tao completa</button>",
+      "css": ".ds-pill { height: 44px; padding: 0 16px; display: flex; align-items: center; gap: 10px; border: 0; border-radius: 999px; background: linear-gradient(180deg, #fbe3e8, #f8d7de); color: #8f3547; font-family: var(--display, 'Gabarito', system-ui, sans-serif); font-size: 13.5px; font-weight: 600; letter-spacing: 0.005em; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 8px 18px -20px rgba(150, 60, 78, 0.8); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.35s, color 0.3s, box-shadow 0.35s; } .ds-pill__dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.5; flex: none; } .ds-pill:hover { transform: translateX(4px); background: #fbd0d9; } .ds-pill.is-active { background: linear-gradient(180deg, #322629, #221a1c); color: #fff7f4; box-shadow: 0 16px 26px -20px rgba(40, 18, 24, 0.9); } .ds-pill.is-active:hover { transform: none; background: #221a1c; } .ds-pill:focus-visible { outline: 2px solid #d8415e; outline-offset: 3px; }"
+    },
+    {
+      "name": "Scene Card",
+      "kind": "card",
+      "refersTo": "scene-card",
+      "description": "White-mat illustration tile, slightly rotated at rest and flattened on hover.",
+      "html": "<button class='ds-scene' type='button' aria-label='Abrir Flor de ameixa'><span class='ds-scene__img'><img src='assets/img/arte-1.jpg' alt='' /></span></button>",
+      "css": ".ds-scene { position: relative; width: 100%; aspect-ratio: 0.84; padding: 5px; border: 0; border-radius: 21px; background: #fffaf7; box-shadow: 0 12px 26px -22px rgba(96, 42, 54, 0.7); cursor: zoom-in; overflow: hidden; transform: rotate(-2.4deg); transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s; } .ds-scene__img { display: block; width: 100%; height: 100%; border-radius: 16px; overflow: hidden; background: #fbe0e5; } .ds-scene img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); } .ds-scene:hover { transform: rotate(0deg) translateY(-4px) scale(1.015); box-shadow: 0 22px 44px -30px rgba(96, 42, 54, 0.42); } .ds-scene:hover img { transform: scale(1.055); } .ds-scene:focus-visible { outline: 2px solid #d8415e; outline-offset: 3px; }"
+    },
+    {
+      "name": "Work Row",
+      "kind": "card",
+      "refersTo": "work-row",
+      "description": "Horizontal collection entry with thumbnail, title, uppercase metadata, and a two-line description.",
+      "html": "<div class='ds-work'><div class='ds-work__inner'><span class='ds-work__thumb'><img src='assets/img/arte-1.jpg' alt='' /></span><span class='ds-work__body'><strong>Flor de ameixa</strong><span class='ds-work__meta'>Retrato · fundo lavanda</span><span class='ds-work__line'>Hu Tao entre borboletas, o chapéu inclinado sobre o olhar.</span></span></div></div>",
+      "css": ".ds-work { border-radius: 17px; background: rgba(255, 255, 255, 0.72); box-shadow: 0 12px 26px -26px rgba(96, 42, 54, 0.9); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, box-shadow 0.4s; } .ds-work:hover { transform: translateY(-2px); background: #fff; } .ds-work__inner { display: flex; align-items: center; gap: 12px; padding: 8px; } .ds-work__thumb { width: 72px; height: 72px; flex: none; border-radius: 12px; overflow: hidden; background: #fbe0e5; } .ds-work__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); } .ds-work:hover .ds-work__thumb img { transform: scale(1.07); } .ds-work__body { display: grid; gap: 2px; min-width: 0; } .ds-work__body strong { font-family: var(--display, 'Gabarito', system-ui, sans-serif); font-size: 13.5px; font-weight: 650; letter-spacing: -0.005em; } .ds-work__meta { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #b34a61; } .ds-work__line { font-size: 12px; line-height: 1.45; color: #786569; }"
+    },
+    {
+      "name": "Framed Hero Print",
+      "kind": "custom",
+      "description": "Provisional presentation of the hero art: 7px cream mat, 26px radius, -2.2 degree tilt. Remove the mat when transparent cutouts arrive.",
+      "html": "<div class='ds-print'><img src='assets/img/arte-1.jpg' alt='' /></div>",
+      "css": ".ds-print { width: 280px; aspect-ratio: 0.78; transform: rotate(-2.2deg); } .ds-print img { display: block; width: 100%; height: 100%; object-fit: cover; border: 7px solid #fff8f3; border-radius: 26px; box-shadow: 0 40px 64px -30px rgba(58, 30, 36, 0.48), inset 0 3px 0 rgba(255, 255, 255, 0.4); }"
+    },
+    {
+      "name": "Viewer Dialog",
+      "kind": "custom",
+      "refersTo": "viewer-shell",
+      "description": "Native dialog shell: cream panel over a blurred plum backdrop, variable frame color per work, circular controls.",
+      "html": "<div class='ds-viewer'><div class='ds-viewer__shell'><button class='ds-viewer__close' type='button' aria-label='Fechar a obra'><svg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' aria-hidden='true'><path d='M6.5 6.5l11 11M17.5 6.5l-11 11'/></svg></button><div class='ds-viewer__frame'><img src='assets/img/arte-1.jpg' alt='' /></div><div class='ds-viewer__bar'><div><h2>Flor de ameixa</h2><p>Retrato · fundo lavanda</p></div><div class='ds-viewer__nav'><button type='button' aria-label='Obra anterior'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' aria-hidden='true'><path d='M14.5 5.5 8 12l6.5 6.5'/></svg></button><button type='button' aria-label='Próxima obra'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' aria-hidden='true'><path d='m9.5 5.5 6.5 6.5-6.5 6.5'/></svg></button></div></div></div></div>",
+      "css": ".ds-viewer { padding: 24px; border-radius: 26px; background: rgba(38, 20, 26, 0.52); backdrop-filter: blur(16px) saturate(0.9); } .ds-viewer__shell { position: relative; padding: 14px; border-radius: 26px; background: #fbf6f2; box-shadow: 0 60px 120px -40px rgba(34, 10, 18, 0.75); } .ds-viewer__close { position: absolute; top: 24px; right: 24px; width: 34px; height: 34px; border: 1px solid rgba(37, 27, 30, 0.12); border-radius: 50%; background: rgba(255, 255, 255, 0.9); color: #251b1e; font-size: 20px; cursor: pointer; } .ds-viewer__close:hover { transform: rotate(90deg); background: #fff; } .ds-viewer__frame { height: 320px; display: grid; place-items: center; overflow: hidden; border-radius: 18px; background: #eee2e8; } .ds-viewer__frame img { width: 100%; height: 100%; object-fit: contain; } .ds-viewer__bar { padding: 12px 6px 2px; display: flex; align-items: center; justify-content: space-between; gap: 16px; } .ds-viewer__bar h2 { margin: 0; font-family: var(--display, 'Gabarito', system-ui, sans-serif); font-size: 18px; font-weight: 650; letter-spacing: -0.01em; } .ds-viewer__bar p { margin: 2px 0 0; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #786569; } .ds-viewer__nav { display: flex; gap: 8px; } .ds-viewer__nav button { width: 36px; height: 36px; border: 1px solid rgba(37, 27, 30, 0.12); border-radius: 50%; background: #fff; color: #251b1e; font-size: 18px; cursor: pointer; } .ds-viewer__nav button:hover { background: #fbe0e5; transform: scale(1.05); }"
+    },
+    {
+      "name": "Toast",
+      "kind": "custom",
+      "description": "Floating charcoal status pill; the only large charcoal surface besides an active pill.",
+      "html": "<div class='ds-toast' role='status'><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='#ffb3c1' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M12 20s-7.5-4.6-7.5-9.6A4.4 4.4 0 0 1 12 7.3a4.4 4.4 0 0 1 7.5 3.1C19.5 15.4 12 20 12 20z'/></svg>Obra marcada neste navegador.</div>",
+      "css": ".ds-toast { display: inline-flex; align-items: center; gap: 9px; padding: 11px 18px; border-radius: 999px; background: #2a2023; color: #fff7f4; font-family: var(--body, 'Gabarito', system-ui, sans-serif); font-size: 12.5px; font-weight: 500; box-shadow: 0 20px 40px -20px rgba(20, 6, 12, 0.8); }"
+    },
+    {
+      "name": "Pagination and Autoplay",
+      "kind": "custom",
+      "description": "Three wine bars plus the 26px autoplay toggle; the active bar widens and the paused toggle fills wine.",
+      "html": "<div class='ds-transport'><div class='ds-bars' role='group' aria-label='Escolher obra em destaque'><button class='ds-bar is-active' type='button' aria-current='true' aria-label='Ver obra 1 de 3'><span></span></button><button class='ds-bar' type='button' aria-label='Ver obra 2 de 3'><span></span></button><button class='ds-bar' type='button' aria-label='Ver obra 3 de 3'><span></span></button></div><button class='ds-auto' type='button' aria-label='Pausar apresentação'><svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M9 6.5v11M15 6.5v11'/></svg></button></div>",
+      "css": ".ds-transport { display: flex; align-items: center; gap: 12px; } .ds-bars { display: flex; align-items: center; gap: 7px; } .ds-bar { width: 44px; height: 24px; padding: 0; display: grid; align-items: center; border: 0; background: none; cursor: pointer; transition: width 0.55s cubic-bezier(0.16, 1, 0.3, 1); } .ds-bar span { display: block; width: 100%; height: 3px; border-radius: 3px; background: rgba(74, 20, 32, 0.38); box-shadow: 0 1px 3px rgba(96, 22, 42, 0.16); transition: background 0.3s; } .ds-bar:hover span { background: rgba(74, 20, 32, 0.58); } .ds-bar.is-active { width: 64px; } .ds-bar.is-active span { background: #4a1420; } .ds-bar:focus-visible { outline: 2px solid #d8415e; outline-offset: -2px; border-radius: 4px; } .ds-auto { width: 26px; height: 26px; display: grid; place-items: center; padding: 0; border: 1px solid rgba(74, 20, 32, 0.28); border-radius: 50%; background: transparent; color: #4a1420; cursor: pointer; transition: background 0.3s, border-color 0.3s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); } .ds-auto:hover { background: rgba(255, 255, 255, 0.36); border-color: rgba(74, 20, 32, 0.5); transform: scale(1.06); } .ds-auto:active { transform: scale(0.94); } .ds-auto.is-paused { background: rgba(74, 20, 32, 0.88); border-color: transparent; color: #fff4f6; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Living Paper Vitrine",
+    "overview": "A warm cream page holds one saturated pink stage. The illustration is the only sharp, saturated object on it; everything else is soft paper, wine-colored type, and quiet pink controls. The world is intimate and small on purpose: three works, one character, one author, a collection that feels pinned to a desk rather than loaded from a database.\n\nThe interface behaves like gallery furniture: a mark, a navigation line, two account actions, pagination bars with an autoplay switch, arrows placed outside the frame. Inside the stage the hero is layered — pale orbs, a 45%-soft-light grain, drifting petals, a cursor-following spot, and a print that lifts off the rose. State motion is slow and buoyant (0.25–1s on one easing curve); parallax uses a second, softer curve, and ambient drift runs at 8s. The 7.8s autoplay starts paused under reduced motion and can be stopped by hand. The system is one font family and a very small set of surface recipes; the richness comes from layering and warmth, not from added components.",
+    "keyCharacteristics": [
+      "Cream paper with a blush top edge, fixed fine grain at 32% multiply, and no cool greys anywhere.",
+      "One rose stage with wine type; berry is reserved for the single filled account action.",
+      "Gabarito alone (400–900, self-hosted, swap), from display to footer.",
+      "Pill actions, rounded image mats, circles for arrows and closes; no square corners.",
+      "Soft plum shadows with large blur and negative spread; no hard offset shadows, almost no 1px outlines.",
+      "The hero print is provisional; .hero__art.is-framed is the documented swap point for transparent cutouts."
+    ],
+    "rules": [
+      { "name": "The Wine-On-Rose Rule", "body": "Type on rose is always Wine Ink (#4a1420), never body ink or black. It holds 6.66:1 on the base rose and 5.76:1 on the deepest stop, so normal-size text passes AA anywhere on the stage.", "section": "colors" },
+      { "name": "The One Filled Action Rule", "body": "Berry appears once per viewport, on Criar conta. Secondary actions use the ghost outline or the pink wash; selected states use charcoal. If two berry filled buttons are visible, one is wrong.", "section": "colors" },
+      { "name": "The Warm Neutral Rule", "body": "No pure grey, no pure black, no cool white as a field. White is a material accent only: the 7px print mat (#fff8f3), the scene mat (#fffaf7), and the viewer shell (#fbf6f2).", "section": "colors" },
+      { "name": "The Single Family Rule", "body": "Gabarito is the only family. The Inter fallback is declared but never fetched; do not load it or add a second display face.", "section": "typography" },
+      { "name": "The Tight Display Rule", "body": "The negative tracking and 0.98 line-height belong to the hero title alone. Body copy keeps its default 1.5 and zero tracking.", "section": "typography" },
+      { "name": "The Uppercase-Is-Metadata Rule", "body": "Uppercase with letterspacing is reserved for metadata, state tags, and the footer. It never introduces a section.", "section": "typography" },
+      { "name": "The Stage-Not-Card Rule", "body": "The hero is the only full-color page field. Shelves sit directly on paper without their own page-level panels; each item carries its own mat or wash.", "section": "layout" },
+      { "name": "The Warm Shadow Rule", "body": "Shadows are plum, never neutral black. Blur is large, spread is negative; a shadow that reads as a grey halo is off-world.", "section": "elevation" },
+      { "name": "The Lift-Not-Outline Rule", "body": "Depth comes from shadow and a 1–2px translate. Standing outlines are hairlines on the ghost button (24% ink) and the viewer controls (12% ink); no card surface gains a border.", "section": "elevation" },
+      { "name": "The Pill-Or-Mat Rule", "body": "If it is an action, it is a pill. If it is an image, it is a rounded mat with an inset image radius. Never a square interactive box.", "section": "shapes" },
+      { "name": "The Frame-Is-Provisional Rule", "body": "The white print mat, cover crop, and −2.2° rotation exist only under .hero__art.is-framed. When transparent cutouts arrive, remove is-framed; the base image is object-fit contain, anchored bottom center, with no border. Do not delete the framed styles until the cutouts have been approved.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do keep the artwork the most saturated object on screen; chrome stays quiet and occupies well under a tenth of the surface.",
+      "Do set any type on rose in Wine Ink (#4a1420), at the shipped sizes and weights.",
+      "Do use Gabarito alone; make hierarchy with 400–900 weight, size, and the two tracking extremes.",
+      "Do use 999px pills for word actions and 16–34px radii for image mats; keep the mat/image nesting (5px mat, 16px inner image).",
+      "Do shade with warm plum, large blur, negative spread (rgba(96, 42, 54, …)).",
+      "Do treat .hero__art.is-framed as the swap point: test the hero both with the print mat and with a transparent cutout bleeding out of the rose.",
+      "Do keep metadata labels uppercase, 11–12px, with 0.08em+ tracking."
+    ],
+    "donts": [
+      "Don't load or introduce a second display family; Inter stays an unused fallback.",
+      "Don't put body ink (#251b1e) or black on the rose; that role is Wine Ink only.",
+      "Don't add a decorative kicker or eyebrow above headings; uppercase is for metadata, state tags, and the footer only.",
+      "Don't use hard offset shadows, neutral grey shadows, or outline cards and images with rigid 1px borders; lift with diffuse warm shadow and 1–4px translation. Hairline borders belong only to the ghost button and viewer controls.",
+      "Don't use berry as a section fill or for more than one filled action per viewport.",
+      "Don't let arrows or pagination bars cover the framed print; use the shipped shrink/hide breakpoints.",
+      "Don't overlay interface labels on the artwork beyond the desktop 'toque na arte' hint and the state tags."
+    ]
+  }
+}

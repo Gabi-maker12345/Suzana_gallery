@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suzana Galery — Hu Tao</title>
+<meta name="description" content="Galeria de fan art de Hu Tao. Três ilustrações, uma vitrine em movimento.">
+<meta name="theme-color" content="#F7F1EC">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23F58C9E'/%3E%3Ccircle cx='32' cy='32' r='15' fill='none' stroke='%23fff' stroke-width='3'/%3E%3Cpath d='M38 18a15 15 0 1 0 8 26 12 12 0 0 1-8-26z' fill='%23fff'/%3E%3Cpath d='M44 22l1.6 4.4L50 28l-4.4 1.6L44 34l-1.6-4.4L38 28l4.4-1.6z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/gabarito-400_900-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/archive.css">
+</head>
+<body>
+<a class="skip-link" href="#boards">Pular para as obras</a>
+
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.2" r="3.5"/><path d="M5.2 20c.7-3.7 3.4-5.7 6.8-5.7s6.1 2 6.8 5.7"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24"><path d="m9.5 5.5 6.5 6.5-6.5 6.5"/></symbol>
+  <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4.5 12h14M13 6.5l5.5 5.5-5.5 5.5"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-9.6A4.4 4.4 0 0 1 12 7.3a4.4 4.4 0 0 1 7.5 3.1C19.5 15.4 12 20 12 20z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3.5c.7 4.4 2.6 6.3 7 7-4.4.7-6.3 2.6-7 7-.7-4.4-2.6-6.3-7-7 4.4-.7 6.3-2.6 7-7z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 6.5v11M15 6.5v11"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M9 6.5 17 12l-8 5.5z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="12.5" rx="3"/><path d="m5 8.5 7 5 7-5"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="8.6" cy="9.6" r="1.4"/><path d="m5.5 17 4.4-4 3.1 2.6 2.6-2.1 3.4 3.9"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7.5h14M9.5 7.5v-2h5v2M7.2 7.5l.8 11h8l.8-11M10.4 11v4.6M13.6 11v4.6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m15.4 15.4 4.3 4.3"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v10.5M7.5 10 12 14.5 16.5 10M5 19.5h14"/></symbol>
+</svg>
+
+<header class="topbar">
+  <div class="topbar__side topbar__side--start">
+    <button class="chip chip--ink" type="button" aria-label="Abrir seu perfil" data-tip="Seu perfil">
+      <svg class="ico" aria-hidden="true"><use href="#i-user"/></svg>
+    </button>
+    <button class="chip chip--rose" type="button" id="newCategory" aria-label="Abrir o acervo local e criar uma categoria" data-tip="Nova categoria">
+      <svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg>
+    </button>
+  </div>
+
+  <nav class="nav" aria-label="Principal">
+    <a class="nav__link" href="#stage" data-nav="inicio">Início</a>
+    <a class="nav__link is-current" href="#boards" aria-current="page" data-nav="buscar">Buscar</a>
+    <a class="nav__link" href="#boards" data-nav="recados">Recados</a>
+  </nav>
+
+  <div class="topbar__side topbar__side--end">
+    <button class="btn btn--ghost" type="button" data-auth="login">Entrar</button>
+    <button class="btn btn--rose" type="button" data-auth="signup">Criar conta</button>
+  </div>
+</header>
+
+<section class="stage" id="stage" aria-roledescription="carrossel" aria-label="Obras em destaque">
+  <button class="stage__arrow stage__arrow--prev" id="prev" type="button" aria-label="Obra anterior">
+    <svg class="ico" aria-hidden="true"><use href="#i-chev-l"/></svg>
+  </button>
+
+  <div class="hero" id="hero">
+    <div class="hero__scene" aria-hidden="true">
+      <div class="hero__orb hero__orb--big"></div>
+      <div class="hero__orb hero__orb--small"></div>
+      <div class="hero__grain"></div>
+      <canvas class="hero__petals" id="petals"></canvas>
+      <div class="hero__spot" id="spot"></div>
+    </div>
+
+    <div class="hero__chrome">
+      <span class="mark" role="img" aria-label="Suzana Galery" data-tip="Suzana Galery">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="18.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M28.5 12.5a13 13 0 1 0 6.4 21.2 10.6 10.6 0 0 1-6.4-21.2z" fill="currentColor"/>
+          <path d="M33 13.6l1.35 3.65L38 18.6l-3.65 1.35L33 23.6l-1.35-3.65L28 18.6l3.65-1.35z" fill="currentColor"/>
+        </svg>
+      </span>
+    </div>
+
+    <div class="hero__copy">
+      <h1 class="hero__title" id="heroTitle">Hu Tao</h1>
+      <p class="hero__desc" id="heroDesc">Ela é a 77ª diretora da Funerária Wangsheng. Estuda poemas antigos, coleciona borboletas e encara a morte com uma piada pronta.</p>
+    </div>
+
+    <div class="hero__art is-framed">
+      <img class="hero__img is-front" id="artA" src="assets/img/arte-1.jpg" alt="" draggable="false">
+      <img class="hero__img" id="artB" src="assets/img/arte-2.jpg" alt="" draggable="false">
+      <button class="hero__artbtn" id="openArt" type="button" aria-label="Ver a obra em destaque inteira"></button>
+      <span class="hero__hint" aria-hidden="true">toque na arte</span>
+    </div>
+
+    <div class="hero__foot">
+      <div class="hero__bars" id="heroBars" role="group" aria-label="Escolher obra em destaque">
+        <button class="bar is-active" type="button" aria-current="true" aria-label="Ver obra 1 de 3"><span></span></button>
+        <button class="bar" type="button" aria-current="false" aria-label="Ver obra 2 de 3"><span></span></button>
+        <button class="bar" type="button" aria-current="false" aria-label="Ver obra 3 de 3"><span></span></button>
+      </div>
+      <button class="auto" id="autoToggle" type="button" aria-label="Pausar apresentação" data-tip="Pausar">
+        <svg class="ico" aria-hidden="true"><use href="#i-pause"/></svg>
+      </button>
+    </div>
+    <p class="sr-only" id="live" aria-live="polite"></p>
+  </div>
+
+  <button class="stage__arrow stage__arrow--next" id="next" type="button" aria-label="Próxima obra">
+    <svg class="ico" aria-hidden="true"><use href="#i-chev-r"/></svg>
+  </button>
+</section>
+
+<main class="boards" id="boards">
+  <section class="shelf shelf--scenes" aria-labelledby="scenesTitle">
+    <div class="shelf__head">
+      <h2 id="scenesTitle">Cenas de Hu Tao</h2>
+      <button class="shelf__chev" id="expandScenes" type="button" aria-expanded="false" aria-controls="extraScene" aria-label="Expandir cenas">
+        <svg class="ico" aria-hidden="true"><use href="#i-chev-r"/></svg>
+      </button>
+    </div>
+
+    <div class="scenes" id="scenes">
+      <button class="scene scene--a" type="button" data-open="0" aria-label="Abrir Flor de ameixa">
+        <span class="scene__img"><img src="assets/img/arte-1.jpg" alt="Hu Tao de chapéu, com a mão no rosto, entre borboletas claras." loading="lazy"></span>
+      </button>
+      <button class="scene scene--b" type="button" data-open="1" aria-label="Abrir Rindo em vermelho">
+        <span class="scene__img"><img src="assets/img/arte-2.jpg" alt="Hu Tao rindo de olhos fechados sobre fundo vermelho, com um fantasma ao lado." loading="lazy"></span>
+      </button>
+      <button class="scene scene--c" type="button" data-open="2" aria-label="Abrir Close de sakura">
+        <span class="scene__img"><img src="assets/img/arte-3.jpg" alt="Close de Hu Tao de óculos redondos e flor de ameixa no cabelo." loading="lazy"></span>
+      </button>
+    </div>
+
+    <button class="more" id="more" type="button" aria-expanded="false" aria-controls="extraScene">
+      <span class="more__label">Ver mais</span>
+      <svg class="ico ico--more" aria-hidden="true"><use href="#i-arrow"/></svg>
+    </button>
+    <div class="extra" id="extraScene" hidden>
+      <div class="extra__row">
+        <img src="assets/img/arte-3.jpg" alt="Detalhe do close de Hu Tao de óculos." loading="lazy">
+        <div class="extra__copy">
+          <strong>Todas as cenas</strong>
+          <span>As três ilustrações estão na prateleira ao lado. Abra qualquer uma para ver de perto.</span>
+        </div>
+        <button class="extra__go" type="button" data-open="2" aria-label="Abrir a última cena">
+          <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="shelf shelf--search" aria-labelledby="searchTitle">
+    <div class="shelf__head">
+      <h2 id="searchTitle">Buscas recentes</h2>
+    </div>
+
+    <div class="searches" id="searches">
+      <button class="pill" type="button" data-filter="retrato" aria-pressed="false">
+        <span class="pill__dot" aria-hidden="true"></span>Hu Tao retrato
+      </button>
+      <button class="pill" type="button" data-filter="flores" aria-pressed="false">
+        <span class="pill__dot" aria-hidden="true"></span>Flores de ameixa
+      </button>
+      <button class="pill" type="button" data-filter="popular" aria-pressed="false">
+        <span class="pill__dot" aria-hidden="true"></span>Popular agora
+      </button>
+      <button class="pill pill--ink is-active" type="button" data-filter="all" aria-pressed="true">
+        <svg class="ico pill__ico" aria-hidden="true"><use href="#i-spark"/></svg>Hu Tao completa
+      </button>
+    </div>
+
+    <div class="keeps" id="keeps" aria-label="Obras recentes">
+      <article class="keep" data-keep="arte-3">
+        <button class="keep__close" type="button" aria-label="Remover Close de sakura das obras recentes">
+          <svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+        <img class="keep__img" src="assets/img/arte-3.jpg" alt="Hu Tao de óculos, recente." loading="lazy">
+        <button class="keep__open" type="button" data-open="2" aria-label="Abrir Close de sakura"></button>
+        <span class="keep__tag">recente</span>
+        <svg class="keep__mark" aria-hidden="true"><use href="#i-heart"/></svg>
+      </article>
+      <article class="keep" data-keep="arte-1">
+        <button class="keep__close" type="button" aria-label="Remover Flor de ameixa das obras recentes">
+          <svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+        <img class="keep__img" src="assets/img/arte-1.jpg" alt="Hu Tao de chapéu, recente." loading="lazy">
+        <button class="keep__open" type="button" data-open="0" aria-label="Abrir Flor de ameixa"></button>
+        <span class="keep__tag">recente</span>
+        <svg class="keep__mark" aria-hidden="true"><use href="#i-heart"/></svg>
+      </article>
+    </div>
+    <p class="keeps__empty" id="keepsEmpty" role="status" aria-live="polite" hidden>
+      <span id="keepsEmptyText">Nada recente por aqui.</span>
+      <button type="button" id="restoreKeeps">Restaurar</button>
+    </p>
+  </section>
+
+  <section class="shelf shelf--works" aria-labelledby="worksTitle">
+    <h2 class="sr-only" id="worksTitle">Obras na coleção</h2>
+
+    <ul class="works" id="works">
+      <li class="work" data-work="0" data-tags="retrato flores">
+        <button class="work__btn" type="button" data-open="0" aria-label="Ver Flor de ameixa">
+          <span class="work__thumb"><img src="assets/img/arte-1.jpg" alt="" loading="lazy"></span>
+          <span class="work__body">
+            <strong>Flor de ameixa</strong>
+            <span class="work__meta">Retrato · fundo lavanda</span>
+            <span class="work__line">Hu Tao entre borboletas, o chapéu inclinado sobre o olhar.</span>
+          </span>
+        </button>
+      </li>
+      <li class="work" data-work="1" data-tags="flores popular">
+        <button class="work__btn" type="button" data-open="1" aria-label="Ver Rindo em vermelho">
+          <span class="work__thumb"><img src="assets/img/arte-2.jpg" alt="" loading="lazy"></span>
+          <span class="work__body">
+            <strong>Rindo em vermelho</strong>
+            <span class="work__meta">Cena · fundo carmim</span>
+            <span class="work__line">Olhos fechados, flor de ameixa e um fantasma rindo junto.</span>
+          </span>
+        </button>
+      </li>
+      <li class="work" data-work="2" data-tags="retrato popular">
+        <button class="work__btn" type="button" data-open="2" aria-label="Ver Close de sakura">
+          <span class="work__thumb"><img src="assets/img/arte-3.jpg" alt="" loading="lazy"></span>
+          <span class="work__body">
+            <strong>Close de sakura</strong>
+            <span class="work__meta">Close · listras rosas</span>
+            <span class="work__line">Óculos redondos, um sorriso de canto e listras cor-de-rosa.</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+
+    <p class="works__empty" id="worksEmpty" hidden>
+      <span>Nenhuma obra com esse filtro.</span>
+      <button type="button" id="clearFilter">Ver as três</button>
+    </p>
+    <p class="sr-only" id="worksStatus" aria-live="polite"></p>
+  </section>
+</main>
+
+<footer class="baseline">
+  <span>Suzana Galery</span>
+  <span>Fan art · Hu Tao · <span id="year">2025</span></span>
+</footer>
+
+
+<dialog class="archive" id="archiveDialog" aria-labelledby="archiveTitle" aria-describedby="archiveNote">
+  <div class="archive__shell">
+    <header class="archive__head">
+      <div>
+        <h2 id="archiveTitle">Seu acervo local</h2>
+        <p id="archiveNote">Monte categorias com as fotos de <code>assets/Suzana</code>. O navegador guarda só a seleção e a ordem. <span class="archive__origin" id="archiveOrigin"></span></p>
+      </div>
+      <div class="archive__head-actions">
+        <button class="archive__export" id="archiveExport" type="button" aria-label="Exportar categorias em JSON" data-tip="Exportar JSON">
+          <svg class="ico" aria-hidden="true"><use href="#i-download"/></svg>
+          <span>Exportar</span>
+        </button>
+        <button class="archive__close" id="archiveClose" type="button" aria-label="Fechar o acervo">
+          <svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="archive__body">
+      <aside class="archive__aside" aria-labelledby="archiveListTitle">
+        <div class="archive__aside-head">
+          <h3 id="archiveListTitle">Categorias <span class="archive__count" id="archiveCount">0</span></h3>
+          <button class="archive__new" id="archiveNew" type="button">Nova</button>
+        </div>
+        <ul class="archive__list" id="archiveList"></ul>
+        <p class="archive__empty" id="archiveEmpty">Nenhuma categoria ainda. A primeira começa no formulário.</p>
+      </aside>
+
+      <section class="archive__editor" aria-labelledby="archiveFormTitle">
+        <h3 id="archiveFormTitle">Nova categoria</h3>
+        <form class="archive__form" id="archiveForm" novalidate>
+          <label class="afield" for="catName">
+            <span class="afield__label">Categoria</span>
+            <input id="catName" name="name" type="text" maxlength="60" required autocomplete="off" placeholder="Ex.: Closes, Cosplay, Flores de ameixa">
+          </label>
+
+          <label class="afield" for="catDesc">
+            <span class="afield__label">Descrição</span>
+            <textarea id="catDesc" name="description" rows="3" maxlength="280" placeholder="O que reúne esta categoria?"></textarea>
+            <span class="afield__hint"><span id="descCount">0</span>/280</span>
+          </label>
+
+          <div class="afield afield--photos">
+            <div class="afield__row">
+              <span class="afield__label" id="photosLabel">Fotos</span>
+              <span class="afield__sub" id="libraryCount">Carregando a pasta…</span>
+            </div>
+            <p class="archive__pick-help">Clique nas fotos na ordem em que devem aparecer. A ordem fica salva com a categoria.</p>
+
+            <section class="archive__selection" aria-labelledby="selectionTitle">
+              <div class="archive__selection-head">
+                <h4 id="selectionTitle">Sua seleção <span class="archive__count" id="selectionCount">0</span></h4>
+                <button type="button" class="archive__clear" id="clearSelection">Limpar</button>
+              </div>
+              <div class="archive__selection-grid" id="photoSelection"></div>
+              <p class="archive__empty archive__empty--selection" id="selectionEmpty">Nenhuma foto escolhida ainda.</p>
+            </section>
+
+            <div class="archive__library-tools">
+              <label class="archive__search" for="photoSearch">
+                <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>
+                <input id="photoSearch" type="search" autocomplete="off" placeholder="Buscar foto pelo nome…">
+              </label>
+              <span class="archive__visible" id="libraryVisible">0 fotos</span>
+            </div>
+            <div class="archive__library" id="photoLibrary" role="group" aria-label="Fotos disponíveis em assets/Suzana"></div>
+            <p class="archive__empty" id="libraryEmpty" hidden>Nenhuma foto com esse nome.</p>
+          </div>
+
+        </form>
+      </section>
+    </div>
+
+    <footer class="archive__footer">
+      <p class="archive__status" id="archiveStatus" role="status" aria-live="polite"></p>
+      <p class="archive__error" id="archiveError" role="alert" hidden></p>
+
+      <div class="archive__actions">
+        <button class="btn btn--rose" type="submit" form="archiveForm" id="archiveSave">Salvar categoria</button>
+        <button class="archive__delete" type="button" id="archiveDelete" hidden>Excluir categoria</button>
+      </div>
+
+      <div class="archive__confirm" id="archiveConfirm" hidden>
+        <p>Excluir <strong id="confirmName">esta categoria</strong>? <span id="confirmTail">A lista de fotos será removida; os arquivos continuam em assets/Suzana.</span></p>
+        <div class="archive__confirm-actions">
+          <button class="btn btn--ghost" type="button" id="cancelDelete">Cancelar</button>
+          <button class="btn archive__danger" type="button" id="confirmDelete">Excluir</button>
+        </div>
+      </div>
+    </footer>
+  </div>
+</dialog>
+
+<dialog class="viewer" id="viewer" aria-labelledby="viewerTitle">
+  <div class="viewer__shell">
+    <button class="viewer__close" id="viewerClose" type="button" aria-label="Fechar a obra">
+      <svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>
+    </button>
+    <div class="viewer__frame">
+      <img id="viewerImg" src="assets/img/arte-1.jpg" alt="">
+    </div>
+    <div class="viewer__bar">
+      <div class="viewer__copy">
+        <h2 id="viewerTitle">Flor de ameixa</h2>
+        <p id="viewerNote">Retrato · fundo lavanda</p>
+      </div>
+      <div class="viewer__nav">
+        <button id="viewerPrev" type="button" aria-label="Obra anterior no visualizador">
+          <svg class="ico" aria-hidden="true"><use href="#i-chev-l"/></svg>
+        </button>
+        <button id="viewerNext" type="button" aria-label="Próxima obra no visualizador">
+          <svg class="ico" aria-hidden="true"><use href="#i-chev-r"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg class="ico" aria-hidden="true"><use href="#i-heart"/></svg>
+  <span id="toastText"></span>
+</div>
+
+<script src="js/data.js" defer></script>
+<script src="js/suzana-assets.js" defer></script>
+<script src="js/archive.js" defer></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>
