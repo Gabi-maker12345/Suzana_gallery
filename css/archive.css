@@ -635,24 +635,6 @@ body:has(dialog[open]) { overflow: hidden; }
   transform: none;
   box-shadow: none;
 }
-.archive__export-footer {
-  height: 38px;
-  padding: 0 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid rgba(37, 27, 30, 0.14);
-  border-radius: 999px;
-  background: #fff;
-  color: var(--ink);
-  font-family: var(--display);
-  font-size: 12px;
-  font-weight: 650;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.3s var(--ease);
-}
-.archive__export-footer .ico { width: 14px; height: 14px; }
-.archive__export-footer:hover { background: var(--rose-wash); transform: translateY(-1px); }
 .archive__delete {
   margin-left: auto;
   border: 0;
@@ -739,7 +721,6 @@ body:has(dialog[open]) { overflow: hidden; }
   .archive__selection-grid { grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); max-height: 140px; }
   .archive__library { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); max-height: 230px; }
   .archive__actions .btn { flex: 1; }
-  .archive__export-footer { flex: none; height: 42px; padding: 0 12px; }
   .archive__delete { margin-left: 0; }
   .archive__confirm { align-items: flex-start; }
   .archive__confirm-actions { width: 100%; }

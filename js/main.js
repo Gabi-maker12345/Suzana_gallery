@@ -61,6 +61,18 @@
   const viewerFrame = $(".viewer__frame");
   const heroAudio = $("#heroAudio");
   const autoBtn = $("#autoToggle");
+  const bgMusic = $("#bgMusic");
+  const soundButtons = $$("[data-sound-toggle]");
+  const SOUND_KEY = "suzana-gallery-sound-muted";
+  let soundMuted = false;
+  try { soundMuted = localStorage.getItem(SOUND_KEY) === "1"; } catch {}
+
+  if (bgMusic) {
+    bgMusic.volume = 0.12;
+    bgMusic.loop = true;
+    bgMusic.muted = soundMuted;
+  }
+  if (heroAudio) heroAudio.muted = soundMuted;
 
   let index = 0;
   let frontEl = artA;
@@ -292,8 +304,59 @@
       } else if (!autoPaused && !document.hidden && !document.querySelector("dialog[open]")) {
         playCurrentAudio();
       }
+      syncBgMusic();
     }, 0);
   });
+
+  /* ---------- som global / música de fundo ---------- */
+
+  function isGalleryAudioView() {
+    const scenes = $("#viewScenes");
+    const gallery = $("#viewGallery");
+    return Boolean((scenes && !scenes.hidden) || (gallery && !gallery.hidden));
+  }
+
+  function reflectSoundButtons() {
+    for (const button of soundButtons) {
+      button.classList.toggle("is-muted", soundMuted);
+      button.setAttribute("aria-pressed", String(soundMuted));
+      button.setAttribute("aria-label", soundMuted ? "Ativar som" : "Silenciar som");
+      button.dataset.tip = soundMuted ? "Ativar som" : "Silenciar som";
+      button.querySelector("use")?.setAttribute("href", soundMuted ? "#i-volume-off" : "#i-volume");
+    }
+  }
+
+  function syncBgMusic() {
+    if (!bgMusic) return;
+    const canPlay =
+      !soundMuted &&
+      !document.hidden &&
+      !document.documentElement.classList.contains("is-preloading") &&
+      isGalleryAudioView();
+    if (!canPlay) {
+      bgMusic.pause();
+      return;
+    }
+    const playing = bgMusic.play();
+    if (playing && typeof playing.catch === "function") playing.catch(() => {});
+  }
+
+  function setSoundMuted(muted) {
+    soundMuted = Boolean(muted);
+    if (bgMusic) {
+      bgMusic.muted = soundMuted;
+      if (soundMuted) bgMusic.pause();
+    }
+    if (heroAudio) heroAudio.muted = soundMuted;
+    try { localStorage.setItem(SOUND_KEY, soundMuted ? "1" : "0"); } catch {}
+    reflectSoundButtons();
+    if (!soundMuted) syncBgMusic();
+  }
+
+  soundButtons.forEach((button) => {
+    button.addEventListener("click", () => setSoundMuted(!soundMuted));
+  });
+  reflectSoundButtons();
 
   /* ---------- pétalas ---------- */
 
@@ -669,11 +732,13 @@
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
       heroAudio?.pause();
+      bgMusic?.pause();
       stopPetals();
     } else {
       if (!autoPaused && isLandingVisible() && !document.querySelector("dialog[open]")) {
         playCurrentAudio();
       }
+      syncBgMusic();
       if (petalState.visible) startPetals();
     }
   });
@@ -729,6 +794,7 @@
       document.documentElement.classList.remove("is-preloading");
       document.body.classList.remove("is-preloading");
       if (!autoPaused) playCurrentAudio();
+      syncBgMusic();
       window.setTimeout(() => preloader.remove(), 900);
     };
 
@@ -785,5 +851,6 @@
   }
   $("#openArt").setAttribute("aria-label", `Ver ${WORKS[0].title} inteira`);
   setAutoPaused(autoPaused);
+  syncBgMusic();
   initPreloader();
 })();

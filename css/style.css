@@ -182,6 +182,28 @@ body::-webkit-scrollbar-track { background: var(--paper); }
     background 0.3s;
 }
 .chip .ico { width: 17px; height: 17px; }
+
+.sound-toggle {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(74, 20, 32, 0.16);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s var(--ease), color 0.3s;
+}
+.sound-toggle .ico { width: 16px; height: 16px; }
+.sound-toggle:hover { background: #fff; border-color: rgba(74, 20, 32, 0.3); transform: scale(1.05); }
+.sound-toggle:active { transform: scale(0.95); }
+.sound-toggle.is-muted { background: var(--ink); border-color: var(--ink); color: #fff7f4; }
+.sound-toggle.is-muted:hover { background: #231a1c; border-color: #231a1c; }
+
+.bg-music { display: none; }
 .chip--rose {
   background: linear-gradient(180deg, #f9b0bd, #f294a6);
   color: #6b2434;

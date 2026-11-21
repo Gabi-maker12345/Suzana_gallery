@@ -405,12 +405,6 @@
 
     const foot = document.createElement("footer");
     foot.className = "cat-foot";
-    const back = document.createElement("a");
-    back.className = "back-link";
-    back.href = "#/cenas";
-    back.innerHTML =
-      '<svg class="ico" aria-hidden="true"><use href="#i-chev-l"></use></svg> Todas as cenas';
-    foot.append(back);
 
     const right = document.createElement("div");
     right.style.display = "flex";
@@ -444,8 +438,10 @@
       right.append(nextLink);
     }
 
-    foot.append(right);
-    el.catContent.append(foot);
+    if (right.children.length) {
+      foot.append(right);
+      el.catContent.append(foot);
+    }
     document.title = `${title} — Suzana Galery`;
 
     requestAnimationFrame(() => {

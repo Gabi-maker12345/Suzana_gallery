@@ -20,7 +20,6 @@
   const el = {
     close: $("#archiveClose"),
     exportBtn: $("#archiveExport"),
-    exportBtnFooter: $("#archiveExportFooter"),
     confirmTail: $("#confirmTail"),
     origin: $("#archiveOrigin"),
     count: $("#archiveCount"),
@@ -687,7 +686,6 @@
   $("#newCategory").addEventListener("click", openArchive);
   el.close.addEventListener("click", closeArchive);
   el.exportBtn.addEventListener("click", exportData);
-  el.exportBtnFooter.addEventListener("click", exportData);
   el.newBtn.addEventListener("click", () => {
     if (!canDiscard()) return;
     resetForm({ focus: true });
