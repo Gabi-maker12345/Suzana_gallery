@@ -272,7 +272,7 @@ A native `<dialog class="archive">` for configuring categories from the photogra
 - **Fields:** Gabarito 16px inputs on #fffaf7, 13px radius, 1px #ecd9d6 border, Cherry-tinted focus ring; uppercase 12px Rose Label field labels; description counter in Quiet Plum.
 - **Photo library:** 82px square tiles (70px ≤560px), 11px radius, 8px gaps, 286px internal scroll; each tile is a toggle with `aria-pressed`; selected tiles carry a 4px Wine ring and a tabular Wine order badge. A 36px search pill filters by filename.
 - **Selection rail:** 58px square tiles in click order, numbered 1…N, draggable to reorder; 24px charcoal remove buttons; "Limpar" confirms above eight items. This rail is the order that gets saved.
-- **Footer:** berry Save always visible, quiet Cherry delete when editing, `role="status"` save confirmation, inline error, and a two-step delete confirmation in a pink panel.
+- **Footer:** berry Save always visible, a quiet Exportar JSON beside it (same action as the header download), quiet Cherry delete when editing, `role="status"` save confirmation, inline error, and a two-step delete confirmation in a pink panel.
 - **Data:** photos are never uploaded or copied. The record in `localStorage` (`suzana-galeria-categorias-v1`) stores the category name, description, and an ordered array of original filenames. `scripts/build-suzana-assets.py` generates the manifest (`js/suzana-assets.js`) with `name`, `src`, `thumb`, and dimensions; HEIC/HEIF photos get a web JPG in `_web`, and every photo gets a 400px thumb in `_thumbs`. Library and selection scale to 50+ photos without storing blobs.
 - **Behavior:** Escape/backdrop close; native focus trap; unsaved edits prompt before discarding; the hero autoplay pauses while the dialog is open.
 
