@@ -5,7 +5,7 @@ Requer Pillow e, para HEIC, pillow-heif:
     python3 -m pip install pillow pillow-heif
     python3 scripts/build-suzana-assets.py
 
-- Fotos HEIC/HEIF ganham uma versão JPG em assets/Suzana/_web/.
+- Todas as fotos ganham uma versão JPG web (1600px) em assets/Suzana/_web/.
 - Todas ganham miniatura em assets/Suzana/_thumbs/.
 - js/suzana-assets.js e assets/Suzana/manifest.json são reescritos.
 """
@@ -63,11 +63,11 @@ def build_one(source: Path) -> dict | None:
             thumb_path = THUMBS / f"{stem}.jpg"
             thumb.save(thumb_path, "JPEG", quality=82, optimize=True)
 
-            src = source
-            if suffix in HEIC_EXTS:
-                web_path = WEB / f"{stem}.jpg"
-                flatten(image).save(web_path, "JPEG", quality=88, optimize=True)
-                src = web_path
+            web = image.copy()
+            web.thumbnail((1600, 1600), Image.Resampling.LANCZOS)
+            web_path = WEB / f"{stem}.jpg"
+            flatten(web).save(web_path, "JPEG", quality=82, optimize=True)
+            src = web_path
 
         return {
             "name": name,

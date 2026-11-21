@@ -4,3 +4,5 @@ Thumbs.db
 .venv/
 node_modules/
 .impeccable/build/
+
+.vercel/
