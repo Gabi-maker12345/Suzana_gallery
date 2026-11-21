@@ -45,9 +45,30 @@
   ];
 
   const WORKS = [
-    { title: "Flor de ameixa", note: "Retrato · sem fundo", img: "assets/img/suzana1_reconstruida.png", frame: "#eee2e8", alt: "Hu Tao de chapéu, entre borboletas claras." },
-    { title: "Rindo em vermelho", note: "Cena · sem fundo", img: "assets/img/suzana2_reconstruida.png", frame: "#f2dcdb", alt: "Hu Tao rindo sobre fundo vermelho, com um fantasma ao lado." },
-    { title: "Close de sakura", note: "Close · sem fundo", img: "assets/img/suzana3_reconstruida.png", frame: "#f6e1e3", alt: "Close de Hu Tao de óculos redondos e flor de ameixa." },
+    { title: "Flor de ameixa", note: "Retrato · sem fundo", img: "assets/img/suzana1_reconstruida.png", frame: "#eee2e8", w: 735, h: 736, alt: "Hu Tao de chapéu, entre borboletas claras." },
+    { title: "Rindo em vermelho", note: "Cena · sem fundo", img: "assets/img/suzana2_reconstruida.png", frame: "#f2dcdb", w: 1080, h: 1078, alt: "Hu Tao rindo sobre fundo vermelho, com um fantasma ao lado." },
+    { title: "Close de sakura", note: "Close · sem fundo", img: "assets/img/suzana3_reconstruida.png", frame: "#f6e1e3", w: 736, h: 732, alt: "Close de Hu Tao de óculos redondos e flor de ameixa." },
+  ];
+
+  const LANDING_SCENES = [
+    {
+      title: "Outorga",
+      note: "Suzana · 1 de 2",
+      img: "assets/Suzana/_web/20260725_122959.jpg",
+      frame: "#f6e1e3",
+      w: 1200,
+      h: 1600,
+      alt: "Suzana sentada, de óculos, durante a outorga.",
+    },
+    {
+      title: "Outorga",
+      note: "Suzana · 2 de 2",
+      img: "assets/Suzana/_web/20260725_123203.jpg",
+      frame: "#f6e1e3",
+      w: 1200,
+      h: 1600,
+      alt: "Suzana posando ao lado do portão, durante a outorga.",
+    },
   ];
 
   const hero = $("#hero");
@@ -87,9 +108,16 @@
   let audioGestureHandler = null;
   let suppressToggleOnce = false;
   let viewerIndex = 0;
+  let viewerItems = WORKS;
+  let viewerClosing = false;
   const preloaded = SLIDES.map((s) => {
     const img = new Image();
     img.src = s.art;
+    return img;
+  });
+  const landingPreloaded = LANDING_SCENES.map((item) => {
+    const img = new Image();
+    img.src = item.img;
     return img;
   });
 
@@ -512,6 +540,10 @@
 
   function fitViewer() {
     if (!viewerImg.naturalWidth) return;
+    if (window.innerWidth <= 700) {
+      viewer.style.width = "";
+      return;
+    }
     const narrow = window.innerWidth <= 520;
     const pad = narrow ? 18 : 28;
     const frameH = viewerFrame.clientHeight || 560;
@@ -520,29 +552,40 @@
     viewer.style.width = `${Math.min(window.innerWidth - (narrow ? 12 : 28), desired)}px`;
   }
 
+  function setLegacyViewerRatio(work) {
+    const width = work?.w || viewerImg.naturalWidth;
+    const height = work?.h || viewerImg.naturalHeight;
+    if (width && height) {
+      viewerFrame.style.setProperty("--viewer-ratio", `${width} / ${height}`);
+    }
+  }
+
   function renderViewer(i, animate = true) {
-    viewerIndex = (i + WORKS.length) % WORKS.length;
-    const work = WORKS[viewerIndex];
+    viewerIndex = (i + viewerItems.length) % viewerItems.length;
+    const work = viewerItems[viewerIndex];
     viewerImg.src = work.img;
     viewerImg.alt = work.alt;
     viewerTitle.textContent = work.title;
     viewerNote.textContent = work.note;
     viewerFrame.style.setProperty("--frame", work.frame);
-    if (viewerImg.complete) fitViewer();
-    else viewerImg.addEventListener("load", fitViewer, { once: true });
+    setLegacyViewerRatio(work);
+    const fit = () => { setLegacyViewerRatio(work); fitViewer(); };
+    if (viewerImg.complete) fit();
+    else viewerImg.addEventListener("load", fit, { once: true });
     if (animate && !reduceMotion.matches) {
       viewerImg.animate(
         [
-          { opacity: 0, transform: "scale(0.98)" },
+          { opacity: 0.35, transform: "scale(1.008)" },
           { opacity: 1, transform: "none" },
         ],
-        { duration: 420, easing: EASE }
+        { duration: 300, easing: EASE }
       );
     }
   }
 
-  function openViewer(i) {
+  function openViewer(i, items = WORKS) {
     if (!viewer) return;
+    viewerItems = items;
     renderViewer(i);
     requestAnimationFrame(fitViewer);
     heroAudio?.pause();
@@ -554,22 +597,43 @@
   }
 
   function closeViewer() {
-    if (!viewer.open) return;
-    viewer.close();
+    if (!viewer?.open || viewerClosing) return;
+    viewerClosing = true;
+    viewer.classList.add("is-closing");
+    const finish = () => {
+      viewer.classList.remove("is-closing");
+      viewer.close();
+      viewerClosing = false;
+    };
+    if (reduceMotion.matches) {
+      finish();
+      return;
+    }
+    window.setTimeout(finish, 260);
   }
 
   viewer.addEventListener("click", (e) => {
     if (e.target === viewer) closeViewer();
   });
+  viewer.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeViewer();
+  });
   $("#viewerClose").addEventListener("click", closeViewer);
   $("#viewerPrev").addEventListener("click", () => renderViewer(viewerIndex - 1));
   $("#viewerNext").addEventListener("click", () => renderViewer(viewerIndex + 1));
 
-  /* ---------- abertura da obra em destaque ---------- */
+  /* ---------- abertura de fotos ---------- */
 
   $("#openArt").addEventListener("click", (e) => {
     burstAt(e.clientX || window.innerWidth * 0.75, e.clientY || window.innerHeight * 0.3);
     window.setTimeout(() => openViewer(index), reduceMotion.matches ? 0 : 170);
+  });
+
+  $$("[data-scene-photo]").forEach((button) => {
+    button.addEventListener("click", () => {
+      openViewer(Number(button.dataset.scenePhoto), LANDING_SCENES);
+    });
   });
 
   /* ---------- navegação ---------- */

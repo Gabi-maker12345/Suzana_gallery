@@ -76,6 +76,11 @@
 
   const clamp01 = (n) => Math.min(1, Math.max(0, n));
 
+  const thumbCache = new Set();
+  const fullCache = new Map();
+  let viewerToken = 0;
+  let viewerClosing = false;
+
   /* ---------- dados ---------- */
 
   function slugify(value) {
@@ -454,6 +459,10 @@
 
   function fitViewer() {
     if (!el.viewer || !el.viewerImg) return;
+    if (window.innerWidth <= 700) {
+      el.viewer.style.width = "";
+      return;
+    }
     const naturalWidth = el.viewerImg.naturalWidth;
     const naturalHeight = el.viewerImg.naturalHeight;
     if (!naturalWidth || !naturalHeight) return;
@@ -464,41 +473,110 @@
     el.viewer.style.width = `${Math.min(window.innerWidth - (narrow ? 12 : 28), desired)}px`;
   }
 
+  function preloadThumb(photo) {
+    const src = photo?.thumbResolved || photo?.srcResolved;
+    if (!src || thumbCache.has(src)) return;
+    thumbCache.add(src);
+    const img = new Image();
+    img.decoding = "async";
+    img.src = src;
+  }
+
+  function preloadFull(photo) {
+    if (!photo?.srcResolved) return null;
+    if (fullCache.has(photo.srcResolved)) return fullCache.get(photo.srcResolved);
+    const img = new Image();
+    img.decoding = "async";
+    img.src = photo.srcResolved;
+    fullCache.set(photo.srcResolved, img);
+    return img;
+  }
+
+  function preloadViewerImages(index) {
+    const list = state.viewerPhotos;
+    if (!list.length) return;
+    list.forEach(preloadThumb);
+    for (const offset of [0, 1, -1, 2, -2]) {
+      preloadFull(list[(index + offset + list.length) % list.length]);
+    }
+  }
+
+  function setCollectionPhoto(index, animate = true) {
+    const list = state.viewerPhotos;
+    if (!list.length) return;
+    state.viewerIndex = (index + list.length) % list.length;
+    const photo = list[state.viewerIndex];
+    const token = ++viewerToken;
+    const thumb = photo.thumbResolved || photo.srcResolved;
+    if (photo.w && photo.h) {
+      el.viewerFrame?.style.setProperty("--viewer-ratio", `${photo.w} / ${photo.h}`);
+    }
+    el.viewerImg.src = thumb;
+    el.viewerImg.alt = `${state.viewerTitle}, foto ${state.viewerIndex + 1} de ${list.length}`;
+    el.viewerTitle.textContent = state.viewerTitle;
+    el.viewerNote.textContent = `${state.viewerIndex + 1} de ${list.length}`;
+    if (animate && !reduceMotion.matches) {
+      el.viewerImg.animate(
+        [
+          { opacity: 0.35, transform: "scale(1.008)" },
+          { opacity: 1, transform: "none" },
+        ],
+        { duration: 280, easing: "cubic-bezier(.16,1,.3,1)" }
+      );
+    }
+    preloadViewerImages(state.viewerIndex);
+    const full = preloadFull(photo);
+    const applyFull = () => {
+      if (token !== viewerToken) return;
+      el.viewerImg.src = photo.srcResolved;
+      fitViewer();
+    };
+    if (full && full.complete && full.naturalWidth) applyFull();
+    else full?.addEventListener("load", applyFull, { once: true });
+    requestAnimationFrame(fitViewer);
+  }
+
   function openViewer(index) {
     if (!el.viewer || !state.viewerPhotos.length) return;
-    state.viewerIndex = (index + state.viewerPhotos.length) % state.viewerPhotos.length;
-    const photo = state.viewerPhotos[state.viewerIndex];
-    el.viewerImg.src = photo.srcResolved || photo.src;
-    el.viewerImg.alt = `${state.viewerTitle}, foto ${state.viewerIndex + 1} de ${
-      state.viewerPhotos.length
-    }`;
-    el.viewerTitle.textContent = state.viewerTitle;
-    el.viewerNote.textContent = `${state.viewerIndex + 1} de ${state.viewerPhotos.length}`;
+    preloadViewerImages(index);
     if (!el.viewer.open) el.viewer.showModal();
+    setCollectionPhoto(index, true);
     requestAnimationFrame(fitViewer);
   }
 
   function stepViewer(direction) {
     if (!el.viewer?.open || !state.viewerPhotos.length) return;
-    state.viewerIndex =
-      (state.viewerIndex + direction + state.viewerPhotos.length) %
-      state.viewerPhotos.length;
-    const photo = state.viewerPhotos[state.viewerIndex];
-    el.viewerImg.src = photo.srcResolved || photo.src;
-    el.viewerImg.alt = `${state.viewerTitle}, foto ${state.viewerIndex + 1} de ${
-      state.viewerPhotos.length
-    }`;
-    el.viewerNote.textContent = `${state.viewerIndex + 1} de ${state.viewerPhotos.length}`;
-    requestAnimationFrame(fitViewer);
+    setCollectionPhoto(state.viewerIndex + direction, true);
+  }
+
+  function closeViewer() {
+    if (!el.viewer?.open || viewerClosing) return;
+    viewerClosing = true;
+    viewerToken += 1;
+    el.viewer.classList.add("is-closing");
+    const finish = () => {
+      el.viewer.classList.remove("is-closing");
+      el.viewer.close();
+      viewerClosing = false;
+    };
+    if (reduceMotion.matches) {
+      finish();
+      return;
+    }
+    window.setTimeout(finish, 260);
   }
 
   function setupViewer() {
     if (!el.viewer) return;
-    el.viewerClose?.addEventListener("click", () => el.viewer.close());
+    el.viewerClose?.addEventListener("click", closeViewer);
     el.viewerPrev?.addEventListener("click", () => stepViewer(-1));
     el.viewerNext?.addEventListener("click", () => stepViewer(1));
     el.viewer.addEventListener("click", (event) => {
-      if (event.target === el.viewer) el.viewer.close();
+      if (event.target === el.viewer) closeViewer();
+    });
+    el.viewer.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      closeViewer();
     });
     el.viewerImg?.addEventListener("load", fitViewer);
     window.addEventListener("resize", fitViewer);
@@ -630,7 +708,13 @@
   function setupRoutes() {
     window.addEventListener("hashchange", () => {
       const route = parseRoute();
-      if (route) applyRoute(route);
+      if (!route) return;
+      const apply = () => applyRoute(route);
+      if (document.startViewTransition && !reduceMotion.matches) {
+        document.startViewTransition(apply);
+      } else {
+        apply();
+      }
     });
   }
 
