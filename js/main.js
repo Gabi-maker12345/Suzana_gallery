@@ -16,32 +16,35 @@
 
   const SLIDES = [
     {
-      title: "Hu Tao",
-      desc: "Ela é a 77ª diretora da Funerária Wangsheng. Estuda poemas antigos, coleciona borboletas e encara a morte com uma piada pronta.",
-      art: "assets/img/arte-1.jpg",
+      title: "Bem-vindo!",
+      desc: "Oi, visitantes! Essa é a Galeria da Suzana. Seja bem-vindo!",
+      art: "assets/img/suzana1_reconstruida.png",
       alt: "Hu Tao de chapéu, com a mão no rosto, entre borboletas claras.",
       orb: "#fbd0d8",
+      audio: "assets/Oi!.mp3",
     },
     {
-      title: "Hu Tao ri",
-      desc: "Rindo de olhos fechados, o chapéu de ameixa inclinado e um fantasma que ri junto. A cena mais barulhenta da coleção.",
-      art: "assets/img/arte-2.jpg",
+      title: "Dá uma olhada!",
+      desc: "Você tá aqui pra ver as incríveis fotos dela, né? Eu sei que tá... Dá uma olhada!",
+      art: "assets/img/suzana2_reconstruida.png",
       alt: "Hu Tao rindo de olhos fechados sobre fundo vermelho, com um fantasma ao lado.",
       orb: "#f7c2c9",
+      audio: "assets/dáumaolhada.mp3",
     },
     {
-      title: "Hu Tao de óculos",
-      desc: "Óculos redondos, flor de ameixa no cabelo e um sorriso de canto. Um close de verão sobre listras cor-de-rosa.",
-      art: "assets/img/arte-3.jpg",
+      title: "Incrível!",
+      desc: "Você não vai se arrepender. Tudo aqui dentro é incrível. A Suzana é incrível.",
+      art: "assets/img/suzana3_reconstruida.png",
       alt: "Close de Hu Tao de óculos redondos e flor de ameixa no cabelo.",
       orb: "#fbd3dc",
+      audio: "assets/incrível.mp3",
     },
   ];
 
   const WORKS = [
-    { title: "Flor de ameixa", note: "Retrato · fundo lavanda", img: "assets/img/arte-1.jpg", frame: "#eee2e8", alt: "Hu Tao de chapéu, entre borboletas claras." },
-    { title: "Rindo em vermelho", note: "Cena · fundo carmim", img: "assets/img/arte-2.jpg", frame: "#f2dcdb", alt: "Hu Tao rindo sobre fundo vermelho, com um fantasma ao lado." },
-    { title: "Close de sakura", note: "Close · listras rosas", img: "assets/img/arte-3.jpg", frame: "#f6e1e3", alt: "Close de Hu Tao de óculos redondos e flor de ameixa." },
+    { title: "Flor de ameixa", note: "Retrato · sem fundo", img: "assets/img/suzana1_reconstruida.png", frame: "#eee2e8", alt: "Hu Tao de chapéu, entre borboletas claras." },
+    { title: "Rindo em vermelho", note: "Cena · sem fundo", img: "assets/img/suzana2_reconstruida.png", frame: "#f2dcdb", alt: "Hu Tao rindo sobre fundo vermelho, com um fantasma ao lado." },
+    { title: "Close de sakura", note: "Close · sem fundo", img: "assets/img/suzana3_reconstruida.png", frame: "#f6e1e3", alt: "Close de Hu Tao de óculos redondos e flor de ameixa." },
   ];
 
   const hero = $("#hero");
@@ -56,15 +59,18 @@
   const viewerTitle = $("#viewerTitle");
   const viewerNote = $("#viewerNote");
   const viewerFrame = $(".viewer__frame");
-  const toastEl = $("#toast");
-  const toastText = $("#toastText");
+  const heroAudio = $("#heroAudio");
+  const autoBtn = $("#autoToggle");
 
   let index = 0;
   let frontEl = artA;
   let busy = false;
-  let autoTimer = 0;
-  let hoverPaused = false;
   let autoPaused = reduceMotion.matches;
+  let audioSlide = -1;
+  let audioBlocked = false;
+  let audioGestureArmed = false;
+  let audioGestureHandler = null;
+  let suppressToggleOnce = false;
   let viewerIndex = 0;
   const preloaded = SLIDES.map((s) => {
     const img = new Image();
@@ -161,39 +167,132 @@
     });
 
     index = target;
-    $("#openArt").setAttribute("aria-label", `Ver ${slide.title} inteira`);
-    live.textContent = `Obra ${target + 1} de ${SLIDES.length}: ${slide.title}`;
-    restartAuto();
+    $("#openArt").setAttribute("aria-label", `Ver ${WORKS[target].title} inteira`);
+    live.textContent = `Cartão ${target + 1} de ${SLIDES.length}: ${slide.title}`;
+    playCurrentAudio({ restart: true });
 
     window.setTimeout(() => {
       busy = false;
     }, reduceMotion.matches ? 30 : 520);
   }
 
-  function restartAuto() {
-    window.clearTimeout(autoTimer);
-    if (autoPaused || hoverPaused || document.hidden) return;
+  /* ---------- áudio dos cartões ---------- */
+
+  function isLandingVisible() {
+    const landing = $("#viewLanding");
+    return !landing || !landing.hidden;
+  }
+
+  function reflectAudioButton() {
+    if (!autoBtn) return;
+    const showPlay = autoPaused || audioBlocked;
+    autoBtn.classList.toggle("is-paused", showPlay);
+    autoBtn.setAttribute("aria-label", showPlay ? "Ouvir a apresentação" : "Pausar o áudio");
+    autoBtn.dataset.tip = showPlay ? "Ouvir" : "Pausar";
+    autoBtn.querySelector("use")?.setAttribute("href", showPlay ? "#i-play" : "#i-pause");
+  }
+
+  function disarmAudioGesture() {
+    if (!audioGestureHandler) return;
+    document.removeEventListener("pointerdown", audioGestureHandler, true);
+    document.removeEventListener("keydown", audioGestureHandler, true);
+    document.removeEventListener("touchstart", audioGestureHandler, true);
+    audioGestureHandler = null;
+    audioGestureArmed = false;
+  }
+
+  function armAudioGesture() {
+    if (audioGestureArmed) return;
+    audioGestureArmed = true;
+    const onGesture = (event) => {
+      disarmAudioGesture();
+      if (event.target instanceof Element && event.target.closest("#autoToggle") && !autoPaused) {
+        suppressToggleOnce = true;
+        window.setTimeout(() => { suppressToggleOnce = false; }, 500);
+      }
+      if (autoPaused) return;
+      playCurrentAudio();
+    };
+    audioGestureHandler = onGesture;
+    document.addEventListener("pointerdown", onGesture, true);
+    document.addEventListener("keydown", onGesture, true);
+    document.addEventListener("touchstart", onGesture, true);
+  }
+
+  function playCurrentAudio({ restart = false } = {}) {
+    if (!heroAudio) return;
+    if (document.documentElement.classList.contains("is-preloading")) return;
+    if (autoPaused || document.hidden || !isLandingVisible()) return;
     if (document.querySelector("dialog[open]")) return;
-    autoTimer = window.setTimeout(() => {
-      if (document.querySelector("dialog[open]")) return;
-      go(index + 1, { user: false });
-    }, 7800);
+    const slide = SLIDES[index];
+    if (!slide || !slide.audio) return;
+    if (audioSlide !== index) {
+      audioSlide = index;
+      heroAudio.src = slide.audio;
+      heroAudio.load();
+    } else if (restart) {
+      try { heroAudio.currentTime = 0; } catch {}
+    }
+    const playing = heroAudio.play();
+    if (playing && typeof playing.then === "function") {
+      playing.then(() => {
+        audioBlocked = false;
+        disarmAudioGesture();
+        reflectAudioButton();
+      }).catch((err) => {
+        if (err && err.name === "NotAllowedError") {
+          audioBlocked = true;
+          reflectAudioButton();
+          armAudioGesture();
+        }
+      });
+    }
   }
 
-  function setAutoPaused(paused, { resumeHover = false } = {}) {
+  function setAutoPaused(paused) {
     autoPaused = paused;
-    if (resumeHover) hoverPaused = false;
-    window.clearTimeout(autoTimer);
-    const autoBtn = $("#autoToggle");
-    autoBtn.classList.toggle("is-paused", paused);
-    autoBtn.setAttribute("aria-label", paused ? "Reproduzir apresentação" : "Pausar apresentação");
-    autoBtn.dataset.tip = paused ? "Reproduzir" : "Pausar";
-    autoBtn.querySelector("use").setAttribute("href", paused ? "#i-play" : "#i-pause");
-    if (!paused) restartAuto();
+    if (paused) heroAudio?.pause();
+    reflectAudioButton();
+    if (!paused) playCurrentAudio();
   }
 
-  $("#autoToggle").addEventListener("click", () => {
-    setAutoPaused(!autoPaused, { resumeHover: true });
+  autoBtn?.addEventListener("click", () => {
+    if (suppressToggleOnce) {
+      suppressToggleOnce = false;
+      return;
+    }
+    setAutoPaused(!autoPaused);
+  });
+
+  heroAudio?.addEventListener("ended", () => {
+    if (autoPaused || document.hidden) return;
+    if (document.querySelector("dialog[open]") || !isLandingVisible()) return;
+    go(index + 1, { user: false });
+  });
+
+  heroAudio?.addEventListener("error", () => {
+    audioBlocked = false;
+    reflectAudioButton();
+  });
+
+  document.querySelectorAll("dialog").forEach((dialog) => {
+    dialog.addEventListener("toggle", () => {
+      if (document.querySelector("dialog[open]")) {
+        heroAudio?.pause();
+      } else if (!autoPaused && isLandingVisible() && !document.hidden) {
+        playCurrentAudio();
+      }
+    });
+  });
+
+  window.addEventListener("hashchange", () => {
+    window.setTimeout(() => {
+      if (!isLandingVisible()) {
+        heroAudio?.pause();
+      } else if (!autoPaused && !document.hidden && !document.querySelector("dialog[open]")) {
+        playCurrentAudio();
+      }
+    }, 0);
   });
 
   /* ---------- pétalas ---------- */
@@ -380,7 +479,7 @@
     if (!viewer) return;
     renderViewer(i);
     requestAnimationFrame(fitViewer);
-    window.clearTimeout(autoTimer);
+    heroAudio?.pause();
     if (typeof viewer.showModal === "function" && !viewer.open) {
       viewer.showModal();
     } else {
@@ -396,188 +495,15 @@
   viewer.addEventListener("click", (e) => {
     if (e.target === viewer) closeViewer();
   });
-  viewer.addEventListener("close", () => {
-    restartAuto();
-  });
   $("#viewerClose").addEventListener("click", closeViewer);
   $("#viewerPrev").addEventListener("click", () => renderViewer(viewerIndex - 1));
   $("#viewerNext").addEventListener("click", () => renderViewer(viewerIndex + 1));
 
-  /* ---------- avisos ---------- */
-
-  let toastTimer = 0;
-  function toast(message) {
-    toastText.textContent = message;
-    toastEl.classList.add("is-on");
-    window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => toastEl.classList.remove("is-on"), 3600);
-  }
-
-  /* ---------- guardados ---------- */
-
-  function closeKeep(keep) {
-    keep.classList.add("is-leaving");
-    window.setTimeout(() => {
-      keep.hidden = true;
-      keep.classList.remove("is-leaving");
-      syncKeepsState();
-      $("#restoreKeeps").focus({ preventScroll: true });
-    }, reduceMotion.matches ? 0 : 380);
-  }
-
-  function syncKeepsState() {
-    const all = $$(".keep");
-    const hiddenCount = all.filter((k) => k.hidden).length;
-    $("#keepsEmpty").hidden = hiddenCount === 0;
-    $("#keeps").hidden = hiddenCount === all.length;
-    $("#keepsEmptyText").textContent =
-      hiddenCount === all.length
-        ? "Nada recente por aqui."
-        : hiddenCount === 1
-          ? "1 recente oculto."
-          : `${hiddenCount} recentes ocultos.`;
-  }
-
-  $$(".keep__close").forEach((btn) => {
-    btn.addEventListener("click", () => closeKeep(btn.closest(".keep")));
-  });
-
-  $("#restoreKeeps").addEventListener("click", () => {
-    $$(".keep").forEach((keep) => {
-      keep.hidden = false;
-      keep.classList.remove("is-leaving");
-      if (!reduceMotion.matches) {
-        keep.animate(
-          [
-            { opacity: 0, transform: "scale(0.9) translateY(6px)" },
-            { opacity: 1, transform: "none" },
-          ],
-          { duration: 460, easing: EASE }
-        );
-      }
-    });
-    syncKeepsState();
-    toast("Recentes restaurados.");
-    $$(".keep__close")[0]?.focus({ preventScroll: true });
-  });
-
-  /* ---------- filtros ---------- */
-
-  const pills = $$(".pill");
-  const works = $$(".work");
-  const worksEmpty = $("#worksEmpty");
-
-  function applyFilter(tag) {
-    const first = new Map(
-      works.map((el) => [el, el.classList.contains("is-hidden") ? null : el.getBoundingClientRect()])
-    );
-
-    works.forEach((el) => {
-      const tags = (el.dataset.tags || "").split(/\s+/);
-      const show = tag === "all" || tags.includes(tag);
-      el.classList.toggle("is-hidden", !show);
-    });
-
-    const visibleCount = works.filter((el) => !el.classList.contains("is-hidden")).length;
-    worksEmpty.hidden = visibleCount > 0;
-    const status = $("#worksStatus");
-    if (status) {
-      status.textContent = visibleCount
-        ? `${visibleCount} ${visibleCount === 1 ? "obra" : "obras"} na prateleira com este filtro.`
-        : "Nenhuma obra com este filtro.";
-    }
-
-    pills.forEach((pill) => {
-      const on = pill.dataset.filter === tag;
-      pill.classList.toggle("is-active", on);
-      pill.setAttribute("aria-pressed", String(on));
-    });
-
-    if (reduceMotion.matches) return;
-
-    works.forEach((el) => {
-      if (el.classList.contains("is-hidden")) return;
-      const prev = first.get(el);
-      const next = el.getBoundingClientRect();
-      if (!prev || prev.width === 0) {
-        el.animate(
-          [
-            { opacity: 0, transform: "translateY(10px)" },
-            { opacity: 1, transform: "none" },
-          ],
-          { duration: 460, easing: EASE }
-        );
-        return;
-      }
-      const dx = prev.left - next.left;
-      const dy = prev.top - next.top;
-      if (!dx && !dy) return;
-      el.animate(
-        [
-          { transform: `translate(${dx}px, ${dy}px)` },
-          { transform: "none" },
-        ],
-        { duration: 520, easing: EASE }
-      );
-    });
-  }
-
-  pills.forEach((pill) => {
-    pill.addEventListener("click", () => applyFilter(pill.dataset.filter));
-  });
-
-  $("#clearFilter").addEventListener("click", () => applyFilter("all"));
-
-  /* ---------- cenas ---------- */
-
-  const scenes = $("#scenes");
-  const more = $("#more");
-  const expandScenes = $("#expandScenes");
-  const extra = $("#extraScene");
-  const sceneCards = $$(".scene", scenes);
-
-  function setExpanded(open) {
-    scenes.classList.toggle("is-expanded", open);
-    extra.hidden = !open;
-    more.setAttribute("aria-expanded", String(open));
-    expandScenes.setAttribute("aria-expanded", String(open));
-    expandScenes.setAttribute("aria-label", open ? "Recolher cenas" : "Expandir cenas");
-    $(".more__label", more).textContent = open ? "Ver menos" : "Ver mais";
-    const third = sceneCards[2];
-    third.setAttribute("aria-hidden", String(!open));
-    third.tabIndex = open ? 0 : -1;
-  }
-
-  more.addEventListener("click", () => setExpanded(more.getAttribute("aria-expanded") !== "true"));
-  expandScenes.addEventListener("click", () => {
-    const open = expandScenes.getAttribute("aria-expanded") !== "true";
-    setExpanded(open);
-  });
-  setExpanded(false);
-
-  /* ---------- abertura de obras ---------- */
-
-  $$("[data-open]").forEach((el) => {
-    el.addEventListener("click", () => openViewer(Number(el.dataset.open)));
-  });
+  /* ---------- abertura da obra em destaque ---------- */
 
   $("#openArt").addEventListener("click", (e) => {
     burstAt(e.clientX || window.innerWidth * 0.75, e.clientY || window.innerHeight * 0.3);
     window.setTimeout(() => openViewer(index), reduceMotion.matches ? 0 : 170);
-  });
-
-  $$("[data-auth]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      toast(
-        btn.dataset.auth === "signup"
-          ? "As contas ainda não estão abertas nesta prévia."
-          : "O acesso está desligado nesta prévia da galeria."
-      );
-    });
-  });
-
-  $(".chip--ink").addEventListener("click", () => {
-    toast("Seu perfil aparece aqui quando as contas abrirem.");
   });
 
   /* ---------- navegação ---------- */
@@ -590,14 +516,44 @@
         if (l === link) l.setAttribute("aria-current", "page");
         else l.removeAttribute("aria-current");
       });
-      if (link.dataset.nav === "inicio") {
-        document.getElementById("stage").scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth", block: "center" });
-      } else if (link.dataset.nav === "buscar") {
-        document.getElementById("boards").scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth", block: "start" });
-      } else {
-        toast("Nenhum recado novo por aqui.");
-      }
+      const target =
+        link.dataset.nav === "inicio" ? "stage" :
+        link.dataset.nav === "cenas" ? "boards" :
+        "faq";
+      const section = document.getElementById(target);
+      if (!section) return;
+      section.scrollIntoView({
+        behavior: reduceMotion.matches ? "auto" : "smooth",
+        block: link.dataset.nav === "inicio" ? "center" : "start",
+      });
     });
+  });
+
+  /* ---------- perguntas frequentes ---------- */
+
+  const faqItems = $$(".faq__item");
+
+  function setFaqOpen(item, open) {
+    const question = $(".faq__q", item);
+    const answer = $(".faq__answer", item);
+    if (!question || !answer) return;
+    item.classList.toggle("is-open", open);
+    question.setAttribute("aria-expanded", String(open));
+    answer.setAttribute("aria-hidden", String(!open));
+    if ("inert" in answer) answer.inert = !open;
+  }
+
+  faqItems.forEach((item) => {
+    const question = $(".faq__q", item);
+    if (!question) return;
+    question.addEventListener("click", () => {
+      const open = !item.classList.contains("is-open");
+      faqItems.forEach((other) => {
+        if (other !== item) setFaqOpen(other, false);
+      });
+      setFaqOpen(item, open);
+    });
+    setFaqOpen(item, item.classList.contains("is-open"));
   });
 
   /* ---------- paralaxe e brilho ---------- */
@@ -626,26 +582,6 @@
   hero.addEventListener("pointerleave", () => {
     hero.style.setProperty("--px", "0");
     hero.style.setProperty("--py", "0");
-  });
-
-  /* ---------- pausa do carrossel ---------- */
-
-  hero.addEventListener("pointerenter", () => {
-    hoverPaused = true;
-    window.clearTimeout(autoTimer);
-  });
-  hero.addEventListener("pointerleave", () => {
-    hoverPaused = false;
-    restartAuto();
-  });
-  hero.addEventListener("focusin", () => {
-    hoverPaused = true;
-    window.clearTimeout(autoTimer);
-  });
-  hero.addEventListener("focusout", (e) => {
-    if (hero.contains(e.relatedTarget)) return;
-    hoverPaused = false;
-    restartAuto();
   });
 
   /* ---------- controles do carrossel ---------- */
@@ -703,8 +639,7 @@
 
   const revealTargets = [
     [$(".shelf--scenes"), 0],
-    [$(".shelf--search"), 90],
-    [$(".shelf--works"), 170],
+    [$(".shelf--faq"), 90],
     [$(".baseline"), 0],
   ].filter(([el]) => el);
 
@@ -733,10 +668,12 @@
 
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
-      window.clearTimeout(autoTimer);
+      heroAudio?.pause();
       stopPetals();
     } else {
-      restartAuto();
+      if (!autoPaused && isLandingVisible() && !document.querySelector("dialog[open]")) {
+        playCurrentAudio();
+      }
       if (petalState.visible) startPetals();
     }
   });
@@ -762,14 +699,81 @@
       revealTargets.forEach(([el]) => el.classList.add("is-in"));
     } else {
       startPetals();
-      restartAuto();
+      if (isLandingVisible() && !document.hidden) setAutoPaused(false);
     }
   });
 
   window.addEventListener("resize", fitViewer);
-  document.addEventListener("sg:archive-closed", restartAuto);
 
   $("#year").textContent = String(new Date().getFullYear());
+
+  /* ---------- preloader ---------- */
+
+  function initPreloader() {
+    const preloader = $("#preloader");
+    const heartButton = $("#preloaderHeart");
+    if (!preloader || !heartButton) {
+      document.documentElement.classList.remove("is-preloading");
+      document.body.classList.remove("is-preloading");
+      return;
+    }
+
+    const showHeart = () => {
+      preloader.classList.add("is-heart-visible");
+      heartButton.disabled = false;
+      heartButton.focus({ preventScroll: true });
+    };
+
+    const openPage = () => {
+      preloader.classList.add("is-opening");
+      document.documentElement.classList.remove("is-preloading");
+      document.body.classList.remove("is-preloading");
+      if (!autoPaused) playCurrentAudio();
+      window.setTimeout(() => preloader.remove(), 900);
+    };
+
+    const fillSteps = [34, 67, 100];
+    let presses = 0;
+
+    const labelForPresses = () => {
+      const remaining = 3 - presses;
+      heartButton.setAttribute(
+        "aria-label",
+        remaining > 0
+          ? `Pressione mais ${remaining} ${remaining === 1 ? "vez" : "vezes"} para abrir a galeria`
+          : "Abrindo a galeria"
+      );
+    };
+
+    window.setTimeout(() => {
+      showHeart();
+      heartButton.setAttribute("aria-label", "Pressione 3 vezes para abrir a galeria");
+    }, 1500);
+
+    heartButton.addEventListener("click", () => {
+      if (heartButton.disabled || preloader.classList.contains("is-opening")) return;
+      if (presses >= 3) return;
+
+      presses += 1;
+      preloader.classList.add("is-pumping");
+      preloader.style.setProperty("--fill", `${fillSteps[presses - 1]}%`);
+
+      heartButton.classList.remove("is-beating");
+      void heartButton.offsetWidth;
+      heartButton.classList.add("is-beating");
+      window.setTimeout(() => heartButton.classList.remove("is-beating"), 650);
+
+      if (presses < 3) {
+        labelForPresses();
+        return;
+      }
+
+      preloader.classList.add("is-full");
+      heartButton.disabled = true;
+      labelForPresses();
+      window.setTimeout(openPage, 1250);
+    });
+  }
 
   /* ---------- estado inicial ---------- */
 
@@ -779,8 +783,7 @@
       if (index === 0) animateTitle(SLIDES[0].title);
     });
   }
-  syncKeepsState();
-  $("#openArt").setAttribute("aria-label", `Ver ${SLIDES[0].title} inteira`);
+  $("#openArt").setAttribute("aria-label", `Ver ${WORKS[0].title} inteira`);
   setAutoPaused(autoPaused);
-  restartAuto();
+  initPreloader();
 })();

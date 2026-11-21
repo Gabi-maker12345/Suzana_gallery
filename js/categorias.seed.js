@@ -1,0 +1,164 @@
+/* Gerado por scripts/build-categories-seed.py — não editar à mão. */
+window.SUZANA_CATEGORIES = [
+  {
+    "id": "bbf97068-8afb-415a-aba1-2dae30bacd7b",
+    "name": "Outorga",
+    "description": "Aqui você pode ver os diferentes momentos da Suzana se divertindo na cerimônia de Outorga de 2026!!!",
+    "photos": [
+      "20260725_122959.jpg",
+      "20260725_123004.jpg",
+      "20260725_123008(1).jpg",
+      "20260725_123008.jpg",
+      "20260725_123136.jpg",
+      "20260725_123203.jpg",
+      "20260725_123209.heic"
+    ],
+    "createdAt": 1795236558241,
+    "updatedAt": 1795239260138
+  },
+  {
+    "id": "8be81fd5-7e31-4c69-a5f8-57c010c4390e",
+    "name": "FITITEL",
+    "description": "Aqui você pode ver os diferentes momentos de Suzana durante o FITITEL 2026!!!",
+    "photos": [
+      "IMG-20260905-WA0012.jpg",
+      "IMG-20260905-WA0011.jpg",
+      "IMG-20260905-WA0010.jpg",
+      "IMG-20260905-WA0002.jpg",
+      "IMG-20260905-WA0125.jpg",
+      "IMG-20260905-WA0001.jpg"
+    ],
+    "createdAt": 1795236741395,
+    "updatedAt": 1795239249737
+  },
+  {
+    "id": "6e4323f6-372c-4007-8400-5563530ee4f3",
+    "name": "Surtos da Madrugada",
+    "description": "Aqui você pode ver as incríveis fotos feitas pela Suzana durante a madrugada, enquanto ela surta com os próprios pensamentos kkk...",
+    "photos": [
+      "IMG-20260901-WA0036.jpg",
+      "IMG-20260901-WA0035.jpg",
+      "IMG-20260901-WA0033.jpg",
+      "IMG-20260901-WA0032.jpg",
+      "IMG-20260828-WA0020.jpg",
+      "IMG-20260828-WA0019.jpg",
+      "IMG-20260828-WA0017.jpg",
+      "IMG-20260828-WA0026.jpg",
+      "IMG-20260828-WA0027.jpg",
+      "IMG-20260828-WA0032.jpg",
+      "IMG-20260828-WA0033.jpg",
+      "IMG-20260828-WA0021.jpg",
+      "IMG-20260828-WA0022.jpg",
+      "IMG-20260828-WA0023.jpg",
+      "IMG-20260828-WA0024.jpg",
+      "IMG-20260828-WA0025.jpg",
+      "IMG-20260901-WA0030.jpg"
+    ],
+    "createdAt": 1795236850902,
+    "updatedAt": 1795239266828
+  },
+  {
+    "id": "fdcc201f-5f54-484f-8bcf-499dddeb25b0",
+    "name": "Aleatórias",
+    "description": "Aqui você pode ver fotos da Suzana que não têm nada a ver com NADA...",
+    "photos": [
+      "1788291764533.png",
+      "20260610_153807.heic",
+      "20260610_153820.heic",
+      "IMG-20260601-WA0001.jpg",
+      "IMG-20260601-WA0002.jpg",
+      "IMG-20260601-WA0003.jpg",
+      "IMG-20260601-WA0004.jpg",
+      "IMG-20260606-WA0043.jpg",
+      "IMG-20260720-WA0031.jpg",
+      "IMG_20261024_230838.jpg",
+      "IMG-20260720-WA0034.jpg",
+      "IMG-20260722-WA0029.jpg",
+      "IMG-20260722-WA0031.jpg",
+      "IMG-20260722-WA0035.jpg",
+      "IMG-20260722-WA0038.jpg",
+      "IMG-20260722-WA0041.jpg",
+      "IMG-20260506-WA0011.jpg",
+      "IMG-20260506-WA0012.jpg",
+      "IMG-20260506-WA0013.jpg",
+      "IMG-20260506-WA0008.jpg",
+      "IMG-20260506-WA0014.jpg",
+      "IMG-20260901-WA0031.jpg"
+    ],
+    "createdAt": 1795236998045,
+    "updatedAt": 1795239243783
+  },
+  {
+    "id": "7376b252-55d2-473b-a667-a4ac0b03f1d4",
+    "name": "Fofas",
+    "description": "Fotos fofas, por algum motivo inexplicável...",
+    "photos": [
+      "20260327_134334.heic",
+      "20260126_131139.heic",
+      "20260306_162124.jpg",
+      "20261010_144807(1)(1).jpg",
+      "IMG-20260929-WA0016.jpg",
+      "IMG_20261024_230838.jpg"
+    ],
+    "createdAt": 1795237118464,
+    "updatedAt": 1795239252401
+  },
+  {
+    "id": "d8be54e9-0727-413d-9faa-c363865be717",
+    "name": "Irmãs",
+    "description": "Todas as fotos de Suzana com suas irmãs",
+    "photos": [
+      "IMG-20260601-WA0006.jpg",
+      "IMG-20260601-WA0007.jpg",
+      "IMG-20260817-WA0037.jpg",
+      "IMG-20260817-WA0028.jpg",
+      "IMG-20260901-WA0034.jpg"
+    ],
+    "createdAt": 1795237759013,
+    "updatedAt": 1795239255017
+  },
+  {
+    "id": "4fe49e05-d242-4d70-891e-706ad3360c4f",
+    "name": "Bonitas",
+    "description": "Todas as fotos bonitas da Suzana!!!",
+    "photos": [
+      "IMG-20260618-WA0011.jpg",
+      "IMG-20260618-WA0010.jpg",
+      "IMG-20260611-WA0001.jpg",
+      "IMG-20260706-WA0018.jpg",
+      "IMG-20260706-WA0020.jpg",
+      "IMG-20260709-WA0027.jpg",
+      "IMG-20260706-WA0021.jpg",
+      "IMG-20260414-WA0026.jpg",
+      "IMG-20260414-WA0024.jpg",
+      "20260725_123008(1).jpg",
+      "IMG-20260809-WA0033.jpg",
+      "IMG-20260809-WA0031.jpg",
+      "IMG-20260809-WA0028.jpg",
+      "IMG-20260809-WA0024.jpg",
+      "IMG-20260901-WA0038.jpg",
+      "IMG-20260823-WA0014.jpg",
+      "IMG-20260823-WA0009.jpg"
+    ],
+    "createdAt": 1795237922166,
+    "updatedAt": 1795239247159
+  },
+  {
+    "id": "17c0ff57-767b-4540-989e-644326f7f78d",
+    "name": "Namorado",
+    "description": "Todas as fotos péssimas da Suzana com seu namorado kkk",
+    "photos": [
+      "20260725_123429.heic",
+      "20260725_123421.heic",
+      "20260725_123517.heic",
+      "IMG-20260725-WA0067.jpg",
+      "IMG-20260725-WA0062.jpg",
+      "IMG-20260725-WA0071.jpg",
+      "IMG-20260725-WA0070.jpg",
+      "IMG-20260725-WA0069.jpg",
+      "IMG-20260725-WA0068.jpg"
+    ],
+    "createdAt": 1795238058908,
+    "updatedAt": 1795239257983
+  }
+];

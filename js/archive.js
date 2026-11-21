@@ -37,6 +37,8 @@
     libraryEmpty: $("#libraryEmpty"),
     libraryVisible: $("#libraryVisible"),
     search: $("#photoSearch"),
+    toggleUsed: $("#toggleUsed"),
+    usedCount: $("#usedCount"),
     selection: $("#photoSelection"),
     selectionEmpty: $("#selectionEmpty"),
     selectionCount: $("#selectionCount"),
@@ -60,6 +62,8 @@
     storageBlocked: false,
     libraryBuilt: false,
     saving: false,
+    showUsed: true,
+    usage: new Map(),
     tiles: new Map(),
     dragIndex: null,
   };
@@ -230,6 +234,7 @@
       showError(friendlyError(error));
     }
     renderList();
+    if (state.libraryBuilt) updateUsage();
   }
 
   /* ---------- biblioteca ---------- */
@@ -263,6 +268,12 @@
       badge.hidden = true;
       tile.append(badge);
 
+      const used = document.createElement("span");
+      used.className = "alib__used";
+      used.hidden = true;
+      used.append(icon("i-check"));
+      tile.append(used);
+
       tile.addEventListener("click", () => togglePhoto(photo.name));
       state.tiles.set(photo.name, tile);
       frag.append(tile);
@@ -272,21 +283,57 @@
     syncLibrarySelection();
   }
 
+  function usageMap() {
+    const usage = new Map();
+    for (const record of state.records) {
+      if (record.id === state.editingId) continue;
+      for (const name of record.photos || []) {
+        const list = usage.get(name) || [];
+        if (!list.includes(record.name)) list.push(record.name);
+        usage.set(name, list);
+      }
+    }
+    return usage;
+  }
+
+  function updateUsage() {
+    state.usage = usageMap();
+    el.usedCount.textContent = String(state.usage.size);
+    for (const [name, tile] of state.tiles) {
+      const used = state.usage.get(name);
+      const badge = tile.querySelector(".alib__used");
+      if (badge) {
+        badge.hidden = !used;
+        badge.title = used ? `Já usada em ${used.join(", ")}` : "";
+      }
+      tile.dataset.used = used ? "true" : "";
+    }
+    applyLibraryFilter();
+    syncLibrarySelection();
+  }
+
   function applyLibraryFilter() {
     const query = norm(el.search.value.trim());
     let visible = 0;
     for (const [name, tile] of state.tiles) {
-      const show = !query || norm(name).includes(query);
+      const matchesQuery = !query || norm(name).includes(query);
+      const isUsed = state.usage.has(name);
+      const show = matchesQuery && (state.showUsed || !isUsed);
       tile.hidden = !show;
       if (show) visible += 1;
     }
-    el.libraryVisible.textContent = query
+    const filtered = Boolean(query) || !state.showUsed;
+    el.libraryVisible.textContent = filtered
       ? `${visible} de ${assets.length}`
       : `${assets.length} foto${assets.length === 1 ? "" : "s"}`;
     el.libraryEmpty.textContent =
       assets.length === 0
         ? "Nenhuma foto encontrada em assets/Suzana. Gere o manifesto da pasta."
-        : "Nenhuma foto com esse nome.";
+        : !state.showUsed
+          ? query
+            ? "Nenhuma foto livre com esse nome."
+            : "Todas as fotos restantes já estão em outras categorias."
+          : "Nenhuma foto com esse nome.";
     el.libraryEmpty.hidden = visible > 0;
   }
 
@@ -297,9 +344,11 @@
       const selected = Boolean(position);
       tile.classList.toggle("is-selected", selected);
       tile.setAttribute("aria-pressed", String(selected));
+      const used = state.usage.get(name);
+      const usedNote = used ? `. Já usada em ${used.join(", ")}` : "";
       tile.setAttribute(
         "aria-label",
-        selected ? `Remover ${name} da seleção` : `Adicionar ${name} à seleção`
+        (selected ? `Remover ${name} da seleção` : `Adicionar ${name} à seleção`) + usedNote
       );
       const badge = tile.querySelector(".alib__order");
       if (badge) {
@@ -460,7 +509,7 @@
     clearStatus();
     updateDescCount();
     renderSelection();
-    syncLibrarySelection();
+    updateUsage();
     updateSaveState();
     renderList();
     if (focus) el.name.focus();
@@ -494,7 +543,7 @@
     clearStatus();
     updateDescCount();
     renderSelection();
-    syncLibrarySelection();
+    updateUsage();
     updateSaveState();
     renderList();
 
@@ -666,6 +715,11 @@
     updateDescCount();
   });
   el.search.addEventListener("input", applyLibraryFilter);
+  el.toggleUsed.addEventListener("click", () => {
+    state.showUsed = !state.showUsed;
+    el.toggleUsed.setAttribute("aria-pressed", String(state.showUsed));
+    applyLibraryFilter();
+  });
   el.clearSelection.addEventListener("click", clearSelection);
   el.del.addEventListener("click", askDelete);
   el.cancelDelete.addEventListener("click", () => {
